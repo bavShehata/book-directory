@@ -6,20 +6,27 @@
     <meta name="A book directory" content="" />
     <!--160 characters max-->
     <meta name="author" content="Bavly Shehata" />
-    <link rel="stylesheet" type="text/css" href="style/style.css" />
-    <link rel="icon" href="/assets/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../assets/favicon.png" />
     <title>Book directory</title>
   </head>
   <body>
     <header>
-      <img src="/assets/favicon.png" alt="Logo" />
+      <a href="./index.html"><img src="../assets/favicon.png" alt="Logo" /></a>
       <h1>Book Directory</h1>
+      <i class="fas fa-bars"></i>
+      <ul>
+        <li><a href="./index.html" class="active">My books</a></li>
+        <li><a href="./add.html">Add a book</a></li>
+        <li><a href="./browse.html">Browse</a></li>
+      </ul>
     </header>
     <main>
-      <div id="current">
-        <h2>Current books</h2>
-        <ul></ul>
-      </div>
       <div id="new">
         <h2>Add a new book</h2>
         <label for="title">title</label>
@@ -46,14 +53,14 @@
           name="quotes"
           placeholder="Favorite quotes"
         ></textarea>
-        <input type="button" id="add" name="add" value="Add" />
+        <input type="button" id="add" name="add" value="Add" class="btn" />
       </div>
     </main>
     <footer>
       <p>Copyright © 2020, BavlifyWeb&trade;</p>
     </footer>
     <script
-      src="https://kit.fontawesome.com/6751b3949e.js"
+      src="https://kit.fontawesome.com/d193bb7800.js"
       crossorigin="anonymous"
     ></script>
     <script src="script/script.js"></script>
