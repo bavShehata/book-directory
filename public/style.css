@@ -132,6 +132,7 @@ header a {
   }
 }
 /*Main*/
+/*Index*/
 #current {
   margin-bottom: 50px;
   background-color: white;
@@ -154,4 +155,39 @@ header a {
 }
 .book h4 {
   line-height: 0.1;
+}
+/*New*/
+#new h2 {
+  margin-bottom: 30px;
+}
+#new .grid {
+  display: grid;
+  grid-template-columns: 80px auto;
+  text-align: left;
+  grid-row-gap: 20px;
+}
+#new label::before {
+  content: "";
+  display: block;
+}
+#new label::after {
+  content: ":";
+  display: inline;
+}
+#new input {
+  width: 400px;
+  width: clamp(85px, 60vw, 400px);
+}
+#new textarea {
+  height: 50px;
+  padding: 0.2rem;
+}
+#new input[type="submit"] {
+  width: 700px;
+  width: min(90%, 700px);
+  margin-top: 10px;
+}
+#new #confirm {
+  padding: 1rem;
+  color: var(--grey);
 }

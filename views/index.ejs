@@ -1,0 +1,33 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+<body>
+  <%- include("./partials/header.ejs") %>
+    <main id="current">
+      <div class="container">
+        <h2>Current books</h2>
+        <div class="book">
+          <i class="fas fa-trash"></i>
+          <h3>Title (year)</h3>
+          <br />
+          <h4>Author</h4>
+          <br />
+          <p>Description</p>
+        </div>
+        <div class="book">
+          <i class="fas fa-trash"></i>
+          <h3>Title (year)</h3>
+          <br />
+          <h4>Author</h4>
+          <br />
+          <p>Description</p>
+        </div>
+      </div>
+    </main>
+    <%- include("./partials/footer.ejs") %>
+    <script
+      src="https://kit.fontawesome.com/d193bb7800.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
