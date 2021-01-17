@@ -1,4 +1,6 @@
+//Environment variables
 require("dotenv/config");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -14,9 +16,6 @@ mongoose
   )
   .catch((error) => console.log(error));
 
-// Book Class
-const Book = require("./models/bookModel");
-
 // middleware & static files
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
@@ -25,28 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 //Routes
-//GET Route
-app.get("/", (req, res) => {
-  res.render("index", { title: "Home" });
-});
-app.get("/add", (req, res) => {
-  res.render("add", { title: "Add", confirm: "" });
-});
-//Adding a book
-app.post("/add", (req, res) => {
-  const book = new Book({
-    title: req.body.title,
-    year: req.body.year,
-    author: req.body.author,
-    description: req.body.description,
-    notes: req.body.notes,
-    quotes: req.body.quotes,
-  });
-  book.save(() => {
-    console.log("New book added");
-    res.render("add", {
-      title: "Add",
-      confirm: `${book.title} has been added!`,
-    });
-  });
-});
+const bookRoutes = require("./routes/bookRoutes");
+
+//Book Routes
+app.use("/book", bookRoutes);

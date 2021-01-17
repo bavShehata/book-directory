@@ -1,11 +1,11 @@
 <html lang="en">
-<%- include("./partials/head.ejs") %>
+<%- include("../partials/head.ejs") %>
 <body>
-  <%- include("./partials/header.ejs") %>
+  <%- include("../partials/header.ejs") %>
     <main>
       <div id="new">
         <h2>Add a new book</h2>
-        <form action="/add" method="POST">
+        <form action="./add" method="POST">
           <div class="grid container">
             <label for="title">title</label>
             <input type="text" id="title" name="title" required />
@@ -37,7 +37,7 @@
         <h3 id="confirm"><%=confirm%></h3>
       </div>
     </main>
-    <%- include("./partials/footer.ejs") %>
+    <%- include("../partials/footer.ejs") %>
     <script
       src="https://kit.fontawesome.com/d193bb7800.js"
       crossorigin="anonymous"
