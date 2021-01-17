@@ -5,33 +5,22 @@
     <main id="current">
       <div class="container">
         <h2>Current books</h2>
-        <div class="book">
-          <i class="fas fa-trash"></i>
-          <h3>Title (year)</h3>
-          <br />
-          <h4>Author</h4>
-          <br />
-          <p>Description</p>
-        </div>
-        <div class="book">
-          <i class="fas fa-trash"></i>
-          <h3>Title (year)</h3>
-          <br />
-          <h4>Author</h4>
-          <br />
-          <p>Description</p>
-          <br />
-          <p>Notes</p>
-          <br />
-          <p>Favorite quotes</p>
-        </div>
+        <% for (var book of books) {%>
+          <div class="book" data-bookID="<%=book._id%>">
+            <i class="fas fa-trash"></i>
+            <h3><%=book.title%> (<%=book.year%>)</h3>
+            <br />
+            <h4><%=book.author%></h4>
+            <br />
+            <p><%=book.description%></p>
+            <br />
+            <p><%=book.notes%></p>
+            <br />
+            <p><%=book.quotes%></p>
+          </div>
+        <% }%>
       </div>
     </main>
     <%- include("../partials/footer.ejs") %>
-    <script
-      src="https://kit.fontawesome.com/d193bb7800.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="./app.js"></script>
   </body>
 </html>

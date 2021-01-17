@@ -13,4 +13,7 @@ router.get("/add", bookControllers.bookForm);
 //Add a new book
 router.post("/add", bookControllers.addBook);
 
+//Delete a book by ID
+router.delete("/:id", bookControllers.deleteBook);
+
 module.exports = router;
