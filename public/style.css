@@ -146,15 +146,32 @@ header a {
   padding-bottom: 50px;
   position: relative;
 }
-.book i {
+.book .fa-trash {
   position: absolute;
   top: 0px;
   right: 10px;
   font-size: 2.5rem;
   cursor: pointer;
 }
+.book .fa-edit,
+.book .fa-save {
+  position: absolute;
+  top: 0px;
+  right: 45px;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+.book .fa-save {
+  right: 50px;
+  display: none;
+}
+.book h3 {
+  width: 90%;
+  display: inline;
+}
 .book h4 {
   line-height: 0.1;
+  margin-top: 1rem;
 }
 /*New*/
 #new h2 {

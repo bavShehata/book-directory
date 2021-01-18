@@ -5,18 +5,24 @@
     <main id="current">
       <div class="container">
         <h2>Current books</h2>
+        <% if (error===true){ %>
+          <h3>This book already exists</h3>
+        <% }%>
         <% for (var book of books) {%>
           <div class="book" data-bookID="<%=book._id%>">
             <i class="fas fa-trash"></i>
-            <h3><%=book.title%> (<%=book.year%>)</h3>
+            <i class="fas fa-edit"></i>
+            <h3 class="editable title"><%=book.title%></h3>
+            <h3>(<span class="editable year"><%=book.year%></span>)</h3>
             <br />
-            <h4><%=book.author%></h4>
+            <h4 class="editable author"><%=book.author%></h4>
             <br />
-            <p><%=book.description%></p>
+            <p>Description: <span class="editable description"><%=book.description%></span></p>
             <br />
-            <p><%=book.notes%></p>
+            <p>Notes: <span class="editable notes"><%=book.notes%></span></p>
             <br />
-            <p><%=book.quotes%></p>
+            <p>Favorite quotes: <span class="editable quotes"><%=book.quotes%></span></p>
+            <i class="fas fa-save"></i>
           </div>
         <% }%>
       </div>

@@ -4,6 +4,7 @@
   "description": "A full-stack project from scratch with html, css, and vanilla JS for frontend, and node.js for backend. The aim is to create a book directory website with its own database. After that, it gets linked to an API of books.",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
