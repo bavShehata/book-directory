@@ -5,9 +5,6 @@
     <main id="current">
       <div class="container">
         <h2>Current books</h2>
-        <% if (error===true){ %>
-          <h3>This book already exists</h3>
-        <% }%>
         <% for (var book of books) {%>
           <div class="book" data-bookID="<%=book._id%>">
             <i class="fas fa-trash"></i>

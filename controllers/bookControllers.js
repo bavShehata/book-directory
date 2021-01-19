@@ -5,9 +5,7 @@ module.exports = {
   // Showing all user books
   allBooks: (req, res) => {
     Book.find()
-      .then((books) =>
-        res.render("bookViews/index", { title: "Home", books, error: false })
-      )
+      .then((books) => res.render("bookViews/index", { title: "Home", books }))
       .catch((err) => console.log("Error: ", err));
   },
   // A form where a new book can be added
