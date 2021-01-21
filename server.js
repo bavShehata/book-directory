@@ -7,7 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 //Connect to database
-const dbURI = `mongodb+srv://${process.env.dbUser}:${process.env.dbPass}@${process.env.dbProject}.ni1ct.mongodb.net/${process.env.dbName}?retryWrites=true&w=majority`;
+const dbURI = `mongodb://${process.env.dbUser}:${process.env.dbPass}@${process.env.dbProject}-shard-00-00.ni1ct.mongodb.net:27017,${process.env.dbProject}-shard-00-01.ni1ct.mongodb.net:27017,${process.env.dbProject}-shard-00-02.ni1ct.mongodb.net:27017/${process.env.dbName}?ssl=true&replicaSet=atlas-xnqgbv-shard-0&authSource=admin&retryWrites=true&w=majority`;
 mongoose
   .connect(dbURI, { useUnifiedTopology: true, useNewUrlParser: true })
   .then(
