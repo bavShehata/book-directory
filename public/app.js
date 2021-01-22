@@ -14,12 +14,8 @@ trashCans.forEach((trashCan) => {
     const bookID = book.dataset.bookid;
 
     // Deleting the book from the database then removing it from the UI
-    fetch(`./${bookID}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    axios
+      .delete(`./${bookID}`)
       .then((book.style.display = "none"))
       .catch((err) => console.log("ERROR: ", err));
   });
@@ -70,14 +66,10 @@ editBtns.forEach((editBtn) => {
       }
       const finalObj = Object.assign({}, finalValues);
       // Updating the book for the user
-      fetch(`./${bookID}`, {
-        method: "PUT",
-        body: JSON.stringify(finalObj),
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      axios
+        .put(`./${bookID}`, {
+          data: finalObj,
+        })
         .then((data) => {
           if (data.status === 409) {
             alert("This book already exists");

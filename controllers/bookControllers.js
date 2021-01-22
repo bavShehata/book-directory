@@ -56,17 +56,17 @@ module.exports = {
     Book.findOne({ _id: req.params.id }).then((newBook) => {
       // Checking if the same book and the same author were used before.
       Book.findOne({
-        $and: [{ title: req.body[0] }, { author: req.body[2] }],
+        $and: [{ title: req.body.data[0] }, { author: req.body.data[2] }],
       })
         .then((oldBook) => {
           // If it's a unique record, then save it to the database
           if (oldBook === null || oldBook._id.toString() === req.params.id) {
-            newBook.title = req.body[0];
-            newBook.year = req.body[1];
-            newBook.author = req.body[2];
-            newBook.description = req.body[3];
-            newBook.notes = req.body[4];
-            newBook.quotes = req.body[5];
+            newBook.title = req.body.data[0];
+            newBook.year = req.body.data[1];
+            newBook.author = req.body.data[2];
+            newBook.description = req.body.data[3];
+            newBook.notes = req.body.data[4];
+            newBook.quotes = req.body.data[5];
             return newBook.save();
           } else {
             // Else, prompt to the user that the book already exists
