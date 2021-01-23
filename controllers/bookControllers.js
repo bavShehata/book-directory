@@ -57,29 +57,48 @@ module.exports = {
       // Checking if the same book and the same author were used before.
       Book.findOne({
         $and: [{ title: req.body.data[0] }, { author: req.body.data[2] }],
-      })
-        .then((oldBook) => {
-          // If it's a unique record, then save it to the database
-          if (oldBook === null || oldBook._id.toString() === req.params.id) {
+      }).then((oldBook) => {
+        // If it's a unique record, then save it to the database
+        if (oldBook === null || oldBook._id.toString() === req.params.id) {
+          // Check if the year is a number
+          if (isNaN(req.body.data[1])) {
+            console.log("The year must be a number: ", oldBook.title);
+            Book.find()
+              .then((books) => res.status(400).send())
+              .catch((err) => console.log("Error: ", err));
+          }
+          // Check if the book has no title, year, or author
+          else if (
+            req.body.data[0] == "" ||
+            req.body.data[1] == "" ||
+            req.body.data[2] == ""
+          ) {
+            console.log("Every book must have a name and an author and a year");
+            Book.find()
+              .then((books) => {
+                res.status(408).send();
+              })
+              .catch((err) => console.log("Error: ", err));
+          } else {
+            // Update book
             newBook.title = req.body.data[0];
             newBook.year = req.body.data[1];
             newBook.author = req.body.data[2];
             newBook.description = req.body.data[3];
             newBook.notes = req.body.data[4];
             newBook.quotes = req.body.data[5];
-            return newBook.save();
-          } else {
-            // Else, prompt to the user that the book already exists
-            console.log("This book already exists: ", oldBook.title);
-            Book.find()
-              .then((books) => res.status(409).send())
-              .catch((err) => console.log("Error: ", err));
+            newBook.save().then(() => {
+              console.log("Book updated Succefully: ", newBook.title);
+            });
           }
-        })
-        .then(() => {
-          console.log("Book updated Succefully: ", newBook.title);
-        })
-        .catch((err) => console.log("Error: ", err));
+        } else {
+          // Else, prompt to the user that the book already exists
+          console.log("This book already exists: ", oldBook.title);
+          Book.find()
+            .then((books) => res.status(409).send())
+            .catch((err) => console.log("Error: ", err));
+        }
+      });
     });
   },
 };

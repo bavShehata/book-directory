@@ -71,12 +71,22 @@ editBtns.forEach((editBtn) => {
           data: finalObj,
         })
         .then((data) => {
-          if (data.status === 409) {
+          // TODO: Maybe not reload?
+          console.log(data);
+        })
+        .catch((err) => {
+          const errorCode = err.response.status;
+          if (errorCode === 409) {
             alert("This book already exists");
             location.reload();
+          } else if (errorCode === 400) {
+            alert("The year must be a number");
+            location.reload();
+          } else if (errorCode === 408) {
+            alert("The book must have a name, an author and a year");
+            location.reload();
           }
-        })
-        .catch((err) => console.log("ERROR: ", err));
+        });
     });
   });
 });
