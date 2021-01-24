@@ -16,7 +16,7 @@ trashCans.forEach((trashCan) => {
     // Deleting the book from the database then removing it from the UI
     axios
       .delete(`./${bookID}`)
-      .then((book.style.display = "none"))
+      .then((document.location = "/book/"))
       .catch((err) => console.log("ERROR: ", err));
   });
 });

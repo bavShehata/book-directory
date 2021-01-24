@@ -1,0 +1,25 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+<body>
+  <%- include("../partials/header.ejs") %>
+    <main id="specific">
+      <div class="book container" data-bookID="<%=book._id%>">
+        <i class="fas fa-trash"></i>
+        <i class="fas fa-edit"></i>
+        <h2>Title: <span class="editable title"><%=book.title%></span></h2>
+        <br />
+        <h3>Year: <span class="editable year"><%=book.year%></span></h3>
+        <br />
+        <h4>Author: <span class="editable author"><%=book.author%></span></h4>
+        <br />
+        <p>Description: <span class="editable description"><%=book.description%></span></p>
+        <br />
+        <p>Notes: <span class="editable notes"><%=book.notes%></span></p>
+        <br />
+        <p>Favorite quotes: <span class="editable quotes"><%=book.quotes%></span></p>
+        <i class="fas fa-save"></i>
+      </div>
+    </main>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

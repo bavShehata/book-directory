@@ -101,4 +101,11 @@ module.exports = {
       });
     });
   },
+  // Get a specific book
+  getBook: (req, res) => {
+    Book.findOne({ _id: req.params.id }).then((book) => {
+      console.log("Book info: ", book.title);
+      res.render("bookViews/book", { title: book.title, book });
+    });
+  },
 };

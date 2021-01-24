@@ -9,7 +9,7 @@
           <div class="book" data-bookID="<%=book._id%>">
             <i class="fas fa-trash"></i>
             <i class="fas fa-edit"></i>
-            <h3>Title: <span class="editable title"><%=book.title%></span></h3>
+            <a href="./<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
             <br />
             <h3>Year: <span class="editable year"><%=book.year%></span></h3>
             <br />

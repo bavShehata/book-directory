@@ -18,4 +18,8 @@ router.delete("/:id", bookControllers.deleteBook);
 
 //Update a book by ID
 router.put("/:id", bookControllers.updateBook);
+
+//Details of a book
+router.get("/:id", bookControllers.getBook);
+
 module.exports = router;
