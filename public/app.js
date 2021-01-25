@@ -6,6 +6,29 @@ hamMenu.addEventListener("click", () => {
   else nav.style.display = "block";
 });
 
+// Collapse sections of book info
+const sections = document.querySelectorAll("#current dt");
+
+sections.forEach((section) => {
+  const content = section.nextElementSibling;
+  // add the collapse button
+  section.innerHTML += `  <i class="fas fa-minus-circle"></i>`;
+  const buttonP = section.querySelector(".fa-minus-circle");
+  section.addEventListener("click", function () {
+    // collapse content
+    // if it is already collapsed
+    if (content.style.display === "none") {
+      buttonP.classList.remove("fa-plus-circle");
+      buttonP.classList.add("fa-minus-circle");
+      content.style.display = "block";
+      // if it isn't already collapsed
+    } else {
+      buttonP.classList.remove("fa-minus-circle");
+      buttonP.classList.add("fa-plus-circle");
+      content.style.display = "none";
+    }
+  });
+});
 // Deleting books
 const trashCans = document.querySelectorAll(".fa-trash");
 trashCans.forEach((trashCan) => {

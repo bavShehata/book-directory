@@ -7,20 +7,20 @@
         <h2>Current books</h2>
         <% for (var book of books) {%>
           <div class="book" data-bookID="<%=book._id%>">
-            <i class="fas fa-trash"></i>
-            <i class="fas fa-edit"></i>
             <a href="./<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
             <br />
             <h3>Year: <span class="editable year"><%=book.year%></span></h3>
             <br />
             <h4>Author: <span class="editable author"><%=book.author%></span></h4>
             <br />
-            <p>Description: <span class="editable description"><%=book.description%></span></p>
-            <br />
-            <p>Notes: <span class="editable notes"><%=book.notes%></span></p>
-            <br />
-            <p>Favorite quotes: <span class="editable quotes"><%=book.quotes%></span></p>
-            <i class="fas fa-save"></i>
+            <dl>
+              <dt>Description</dt>
+              <dd class="editable description"><%=book.description%></dd>
+              <dt>Notes</dt>
+              <dd class="editable notes"><%=book.notes%></dd>
+              <dt>Favorite quotes</dt>
+              <dd class="editable quotes"><%=book.quotes%></dd>
+            </dl>
           </div>
         <% }%>
       </div>

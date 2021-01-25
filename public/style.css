@@ -67,7 +67,8 @@ p,
 label,
 .btn,
 li,
-a {
+a,
+dd {
   font-size: 1.6rem;
   color: var(--strange-clr);
 }
@@ -142,6 +143,34 @@ header a {
   text-align: center;
   padding: 30px 0;
 }
+#current h3,
+#current h4 {
+  display: inline-block;
+  width: 100%;
+  background-color: var(--secondary-clr);
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 5px;
+}
+#current h4 {
+  margin-bottom: 10px;
+}
+#current dt {
+  display: inline-block;
+  width: 100%;
+  padding: 5px;
+  background-color: var(--secondary-clr);
+  font-size: 1.9em;
+  font-weight: bold;
+  border-radius: 5px;
+}
+#current .fa-minus-circle,
+#current .fa-plus-circle {
+  float: right;
+}
+#current dd {
+  padding: 10px;
+}
 .book {
   padding-bottom: 50px;
   position: relative;
@@ -170,7 +199,6 @@ header a {
   display: inline;
 }
 .book h4 {
-  line-height: 0.1;
   margin-top: 1rem;
 }
 /*New*/

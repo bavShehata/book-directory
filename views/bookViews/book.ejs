@@ -12,11 +12,14 @@
         <br />
         <h4>Author: <span class="editable author"><%=book.author%></span></h4>
         <br />
-        <p>Description: <span class="editable description"><%=book.description%></span></p>
-        <br />
-        <p>Notes: <span class="editable notes"><%=book.notes%></span></p>
-        <br />
-        <p>Favorite quotes: <span class="editable quotes"><%=book.quotes%></span></p>
+        <dl>
+          <dt>Description</dt>
+          <dd class="editable description"><%=book.description%></dd>
+          <dt>Notes</dt>
+          <dd class="editable notes"><%=book.notes%></dd>
+          <dt>Favorite quotes</dt>
+          <dd class="editable quotes"><%=book.quotes%></dd>
+        </dl>
         <i class="fas fa-save"></i>
       </div>
     </main>
