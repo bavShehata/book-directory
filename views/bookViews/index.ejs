@@ -2,8 +2,8 @@
 <%- include("../partials/head.ejs") %>
 <body>
   <%- include("../partials/header.ejs") %>
-    <main id="current">
-      <div class="container">
+    <main id="current" class="listPage">
+      <div class="container" id="listPage">
         <h2>Current books</h2>
         <% for (var book of books) {%>
           <div class="book" data-bookID="<%=book._id%>">

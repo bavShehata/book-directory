@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Book = require("../models/bookModel");
-
+const axios = require("axios").default;
 module.exports = {
   // Showing all user books
   allBooks: (req, res) => {
@@ -107,5 +107,48 @@ module.exports = {
       console.log("Book info: ", book.title);
       res.render("bookViews/book", { title: book.title, book });
     });
+  },
+  // Browse books
+  browseBooks: (req, res) => {
+    // Get 10 random books
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var RGLetter = possible[Math.floor(Math.random() * (possible.length - 1))];
+    const RGNumber = Math.floor(Math.random() * 240); // the number of current books for the query "e" is 254
+    const maxItems = axios
+      .get(
+        `https://www.googleapis.com/books/v1/volumes?q=${RGLetter}&startIndex=${RGNumber}`
+      )
+      .then((response) => {
+        const books = response.data.items;
+        for (var i = 0; i < 10; i++) {
+          const bookInfo = response.data.items[i].volumeInfo;
+          const bookTitle = bookInfo.title;
+          var bookYear = bookInfo.publishedDate;
+          if (bookYear !== undefined)
+            //Get only the year of the book
+            bookYear = bookInfo.publishedDate.substring(0, 4).trim();
+          else bookYear = "Unknown";
+          var bookAuthors = bookInfo.authors;
+          if (bookAuthors !== undefined) {
+            const authors = () => {
+              // Find the number of authors
+              const authorCount = bookInfo.authors.length;
+              var authors = "";
+              for (var j = 0; j < authorCount; j++) {
+                // Add each author and a comma and whitespace
+                authors += `${bookInfo.authors[j]}, `;
+              }
+              // Remove the comma and whitespace of the last author
+              authors = authors.substring(0, authors.length - 2).trim();
+              return authors;
+            };
+            bookAuthors = authors();
+          } else bookAuthors = "Unknown";
+          var bookDescription = bookInfo.description;
+          if (bookDescription === undefined) bookDescription = "None";
+        }
+        console.log("Books shown to browse");
+        res.render("bookViews/browse", { title: "Browse", books });
+      });
   },
 };

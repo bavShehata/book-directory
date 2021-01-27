@@ -7,25 +7,25 @@ hamMenu.addEventListener("click", () => {
 });
 
 // Collapse sections of book info
-const sections = document.querySelectorAll("#current dt");
+const sections = document.querySelectorAll("#listPage dt");
 
 sections.forEach((section) => {
   const content = section.nextElementSibling;
   // add the collapse button
-  section.innerHTML += `  <i class="fas fa-minus-circle"></i>`;
-  const buttonP = section.querySelector(".fa-minus-circle");
+  section.innerHTML += `  <i class="fas fa-plus-circle"></i>`;
+  const buttonP = section.querySelector(".fa-plus-circle");
   section.addEventListener("click", function () {
     // collapse content
     // if it is already collapsed
-    if (content.style.display === "none") {
-      buttonP.classList.remove("fa-plus-circle");
-      buttonP.classList.add("fa-minus-circle");
-      content.style.display = "block";
-      // if it isn't already collapsed
-    } else {
+    if (content.style.display === "block") {
       buttonP.classList.remove("fa-minus-circle");
       buttonP.classList.add("fa-plus-circle");
       content.style.display = "none";
+      // if it isn't already collapsed
+    } else {
+      buttonP.classList.remove("fa-plus-circle");
+      buttonP.classList.add("fa-minus-circle");
+      content.style.display = "block";
     }
   });
 });
@@ -81,7 +81,6 @@ editBtns.forEach((editBtn) => {
       i = 0;
       prevFields.forEach((finalField) => {
         finalField.innerHTML = finalValues[i++];
-        console.log(finalValues[i]);
       });
 
       for (var i = 0; i < prevFields.length; i++) {

@@ -63,11 +63,11 @@ h1 {
 h2 {
   font-size: 2.2rem;
 }
-h3,
-dt {
+h3 {
   font-size: 1.9rem;
 }
-h4 {
+h4,
+dt {
   font-size: 1.7rem;
 }
 p,
@@ -144,17 +144,17 @@ header a {
 }
 /*Main*/
 /*Index*/
-#current {
+#listPage {
   margin-bottom: 50px;
   background-color: white;
   text-align: left;
 }
-#current h2 {
+#listPage h2 {
   text-align: center;
   padding: 30px 0;
 }
-#current h3,
-#current h4 {
+#listPage h3,
+#listPage h4 {
   display: inline-block;
   width: 100%;
   background-color: var(--secondary-clr);
@@ -162,25 +162,27 @@ header a {
   margin: 5px 0;
   padding: 5px;
 }
-#current h4 {
-  margin-bottom: 10px;
+#listPage h4 {
+  margin: 5px 0;
 }
-#current dt {
+#listPage dt {
   display: inline-block;
   width: 100%;
   padding: 5px;
+  margin: 5px 0;
   background-color: var(--secondary-clr);
   font-weight: bold;
   border-radius: 5px;
 }
-#current .fa-minus-circle,
-#current .fa-plus-circle {
+#listPage .fa-minus-circle,
+#listPage .fa-plus-circle {
   float: right;
 }
-#current dd {
-  padding: 10px;
+#listPage dd {
+  padding: 0 10px;
+  display: none;
 }
-#current .book {
+#listPage .book {
   padding: 5px;
   margin-bottom: 50px;
   position: relative;
