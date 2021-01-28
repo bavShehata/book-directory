@@ -9,7 +9,7 @@ module.exports = {
   },
   // A form where a new book can be added
   bookForm: async (req, res) => {
-    res.render("bookViews/add", { title: "Add", confirm: "" });
+    res.render("bookViews/add", { title: "Add", added: 0 });
   },
   // The process of adding a book from the form to the user
   addBook: async (req, res) => {
@@ -30,7 +30,10 @@ module.exports = {
     if (oldBook === null) {
       await book.save();
       console.log("New book added: ", book.title);
-      res.send();
+      res.render("bookViews/add", {
+        title: "Add",
+        added: 1,
+      });
     } else {
       // Else, prompt to the user that the book already exists
       console.log("This book already exists: ", book.title);

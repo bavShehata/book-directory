@@ -5,11 +5,12 @@
     <main id="current" class="listPage">
       <div class="container" id="listPage">
         <h2>Current books</h2>
-        <% for (var book of books) {%>
+        <% for (var book of books) {
+          %>
           <div class="book" data-bookID="<%=book._id%>">
             <a href="./<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
             <br />
-            <h4>Year: <span class="editable year"><%=book.year%></span></h4>
+            <h4>Year: <span class="editable year"><%=book.year!=0?book.year:"Unknown"%></span></h4>
             <br />
             <h4>Author: <span class="editable author"><%=book.author%></span></h4>
             <br />

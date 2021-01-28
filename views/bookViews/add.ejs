@@ -34,9 +34,12 @@
           </div>
           <input type="submit" id="add" name="add" value="Add" class="btn" />
         </form>
-        <h3 id="confirm"><%=confirm%></h3>
       </div>
     </main>
+    <script type="text/javascript">
+      if(<%=added%>)
+        alert("Book added Successfully")
+</script>
     <%- include("../partials/footer.ejs") %>
   </body>
 </html>
