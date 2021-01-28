@@ -260,7 +260,28 @@ header a {
 #specific h2 {
   padding: 0 15%;
 }
+#specific h3 {
+  display: inline-block;
+  padding-right: 10%;
+}
+/*Browse*/
+#browse h3 {
+  padding-right: 20%;
+}
+#browse .btn {
+  background-color: var(--secondary-clr);
+  color: var(--main-clr);
+  font-weight: bold;
+  position: absolute;
+  top: 9px;
+  right: 5px;
+  cursor: pointer;
+}
 
+#browse .btn:hover {
+  background-color: var(--main-clr);
+  color: var(--secondary-clr);
+}
 /*Footer*/
 footer {
   flex-shrink: 0;

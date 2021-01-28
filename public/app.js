@@ -32,18 +32,40 @@ sections.forEach((section) => {
 // Deleting books
 const trashCans = document.querySelectorAll(".fa-trash");
 trashCans.forEach((trashCan) => {
-  trashCan.addEventListener("click", () => {
+  trashCan.addEventListener("click", async () => {
     const book = trashCan.parentElement;
     const bookID = book.dataset.bookid;
 
-    // Deleting the book from the database then removing it from the UI
-    axios
-      .delete(`./${bookID}`)
-      .then((document.location = "/book/"))
-      .catch((err) => console.log("ERROR: ", err));
+    // Deleting the book from the database and removing it from the UI
+    console.log("objs");
+
+    await axios.delete(`./${bookID}`);
+    try {
+      alert("Book deleted Successfully");
+      document.location = "/book/";
+    } catch {
+      console.log("Book did not get deleted");
+    }
   });
 });
 
+// Add a book from the browse page
+const browsingBooks = document.querySelectorAll("#browse .book");
+browsingBooks.forEach((book) => {
+  const title = book.querySelector(".title").innerHTML;
+  const year = book.querySelector(".year").innerHTML;
+  const author = book.querySelector(".author").innerHTML;
+  const description = book.querySelector(".description").innerHTML;
+  const addBtn = book.querySelector(".btn");
+  addBtn.addEventListener("click", async () => {
+    try {
+      await axios.post("/book/add", { title, year, author, description });
+      alert("New book added");
+    } catch {
+      alert("Book already exists");
+    }
+  });
+});
 // Editing books
 const editBtns = document.querySelectorAll(".fa-edit");
 var finalValues = [];
@@ -68,7 +90,7 @@ editBtns.forEach((editBtn) => {
       newField.value = prevValues[i++];
     });
     // The save button
-    saveBtn.addEventListener("click", () => {
+    saveBtn.addEventListener("click", async () => {
       saveBtn.style.display = "none";
       editBtn.style.display = "inline";
       // Collecting the new data
@@ -88,13 +110,9 @@ editBtns.forEach((editBtn) => {
       }
       const finalObj = Object.assign({}, finalValues);
       // Updating the book for the user
-      axios
+      await axios
         .put(`./${bookID}`, {
           data: finalObj,
-        })
-        .then((data) => {
-          // TODO: Maybe not reload?
-          console.log(data);
         })
         .catch((err) => {
           const errorCode = err.response.status;
