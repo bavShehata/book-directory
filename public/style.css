@@ -264,8 +264,12 @@ header a {
 #specific .book {
   position: relative;
 }
-#specific .editing {
-  width: auto;
+#specific .editingMinor {
+  width: 100%;
+}
+#specific .editingMajor {
+  width: 100%;
+  height: 50px;
 }
 /*Browse*/
 #browse #search {

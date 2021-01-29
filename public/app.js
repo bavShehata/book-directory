@@ -1,3 +1,7 @@
+// TODO: Add pagination to search and index pages.
+// TODO: Add sort by year and author in index page.
+// TODO: Add a delete all books in index page.
+
 // Show/hide navigation on mobile
 const hamMenu = document.querySelector("header i");
 hamMenu.addEventListener("click", () => {
@@ -67,7 +71,6 @@ browsingBooks.forEach((book) => {
   });
 });
 // Search the browsed books
-// TODO: Search functionality to browse page with click button and enter textbox
 const searchBtn = document.querySelector("#browse #search i");
 var bookQuery = document.querySelector("#browse #search input");
 
@@ -101,11 +104,14 @@ editBtns.forEach((editBtn) => {
     saveBtn.style.display = "block";
     prevFields.forEach((prevField) => {
       prevValues.push(prevField.innerHTML);
-      prevField.outerHTML = `<input type="text" class="editing" />`;
+      prevField.outerHTML = `<textarea
+      ></textarea>`;
     });
-    const newFields = book.querySelectorAll("input");
+    const newFields = book.querySelectorAll("textarea");
     var i = 0;
     newFields.forEach((newField) => {
+      if (i < 3) newField.classList.add("editingMinor");
+      else newField.classList.add("editingMajor");
       newField.value = prevValues[i++];
     });
     // The save button
@@ -113,7 +119,7 @@ editBtns.forEach((editBtn) => {
       saveBtn.style.display = "none";
       editBtn.style.display = "inline";
       // Collecting the new data
-      var editedFields = book.querySelectorAll("input");
+      var editedFields = book.querySelectorAll("textarea");
       i = 0;
       editedFields.forEach((editedField) => {
         finalValues[i] = editedField.value;

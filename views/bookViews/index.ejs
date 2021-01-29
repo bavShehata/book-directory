@@ -18,9 +18,9 @@
               <dt>Description</dt>
               <dd class="editable description"><%=book.description%></dd>
               <dt>Notes</dt>
-              <dd class="editable notes"><%=book.notes%></dd>
+              <dd class="editable notes"><%=book.notes!=""?book.notes:"None"%></dd>
               <dt>Favorite quotes</dt>
-              <dd class="editable quotes"><%=book.quotes%></dd>
+              <dd class="editable quotes"><%=book.quotes!=""?book.quotes:"None"%></dd>
             </dl>
           </div>
         <% }%>
