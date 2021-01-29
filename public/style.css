@@ -189,9 +189,6 @@ header a {
   border: 4px solid var(--main-clr);
   border-radius: 5px;
 }
-#specific .book {
-  position: relative;
-}
 .book .fa-trash {
   position: absolute;
   top: 0px;
@@ -264,7 +261,34 @@ header a {
   display: inline-block;
   padding-right: 10%;
 }
+#specific .book {
+  position: relative;
+}
+#specific .editing {
+  width: auto;
+}
 /*Browse*/
+#browse #search {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+}
+#browse #search input {
+  width: 100%;
+  font-size: 2rem;
+  padding: 0.2rem 0.1rem;
+}
+#browse #search i {
+  padding: 0.3rem;
+  cursor: pointer;
+}
+#browse #search i:hover {
+  background-color: #888;
+}
 #browse h3 {
   padding-right: 20%;
 }

@@ -66,6 +66,25 @@ browsingBooks.forEach((book) => {
     }
   });
 });
+// Search the browsed books
+// TODO: Search functionality to browse page with click button and enter textbox
+const searchBtn = document.querySelector("#browse #search i");
+var bookQuery = document.querySelector("#browse #search input");
+
+if (bookQuery) {
+  bookQuery.addEventListener("keydown", (e) => {
+    console.log("EVENT: ", e);
+    console.log("EVENT key: ", e.keyCode);
+    if (e.keyCode == 13) {
+      bookQuery = document.querySelector("#browse #search input").value;
+      window.location.replace(`/book/browse/${bookQuery}`);
+    }
+  });
+  searchBtn.addEventListener("click", () => {
+    bookQuery = document.querySelector("#browse #search input").value;
+    window.location.replace(`/book/browse/${bookQuery}`);
+  });
+}
 // Editing books
 const editBtns = document.querySelectorAll(".fa-edit");
 var finalValues = [];
@@ -82,7 +101,7 @@ editBtns.forEach((editBtn) => {
     saveBtn.style.display = "block";
     prevFields.forEach((prevField) => {
       prevValues.push(prevField.innerHTML);
-      prevField.outerHTML = `<input type="text" />`;
+      prevField.outerHTML = `<input type="text" class="editing" />`;
     });
     const newFields = book.querySelectorAll("input");
     var i = 0;

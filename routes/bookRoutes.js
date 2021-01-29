@@ -16,6 +16,9 @@ router.post("/add", bookControllers.addBook);
 //Browsing books
 router.get("/browse", bookControllers.browseBooks);
 
+//Searching browsing books
+router.get("/browse/:query", bookControllers.browseBooksSearch);
+
 //Delete a book by ID
 router.delete("/:id", bookControllers.deleteBook);
 

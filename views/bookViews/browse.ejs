@@ -5,6 +5,10 @@
     <main id="browse" class="listPage">
       <div class="container" id="listPage">
         <h2>Browse books</h2>
+        <section id="search">
+          <input type="text" name="search" placeholder="Book title or author"/>
+          <i class="fas fa-search"></i>
+        </section>
         <% for (var book of books) {
           const bookInfo = book.volumeInfo;
           const bookID = book.id;

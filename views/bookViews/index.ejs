@@ -8,7 +8,7 @@
         <% for (var book of books) {
           %>
           <div class="book" data-bookID="<%=book._id%>">
-            <a href="./<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
+            <a href="/book/<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
             <br />
             <h4>Year: <span class="editable year"><%=book.year!=0?book.year:"Unknown"%></span></h4>
             <br />
