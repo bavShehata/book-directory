@@ -5,6 +5,20 @@
     <main id="current" class="listPage">
       <div class="container" id="listPage">
         <h2>Current books</h2>
+        <section id="sort">
+          <label for="sort">Sort by: </label>
+          <select id="cars" name="sort">
+            <option value="_id" selected>Date added</option>
+            <option value="year">Year published</option>
+            <option value="author">Author</option>
+            <option value="title">Title</option>
+          </select>
+          <input type="radio" id="ascending" name="sortOrder" value="1" >
+          <label for="ascending">Ascending</label>
+          <input type="radio" id="descending" name="sortOrder" value="-1" checked>
+          <label for="descending">Descending</label>
+          <button type="button" class="btn" name="submit">Sort</button>
+        </section>
         <% for (var book of books) {
           %>
           <div class="book" data-bookID="<%=book._id%>">

@@ -1,6 +1,6 @@
 // TODO: Add pagination to search and index pages.
-// TODO: Add sort by year and author in index page.
 // TODO: Add a delete all books in index page.
+// TODO: Add responsivity for mobile and remove the hovers
 
 // Show/hide navigation on mobile
 const hamMenu = document.querySelector("header i");
@@ -33,6 +33,30 @@ sections.forEach((section) => {
     }
   });
 });
+// Sorting books
+const sortBtn = document.querySelector("#sort .btn");
+if (sortBtn != undefined) {
+  sortBtn.addEventListener("click", async () => {
+    try {
+      // Collect sorting data
+      var sortOrder;
+      const sortBy = document.querySelector("#sort select").value;
+      const sortOrderOptions = document.querySelectorAll(
+        `#sort input[type="radio"]`
+      );
+      sortOrderOptions.forEach((sortOrderOption) => {
+        if (sortOrderOption.checked) sortOrder = sortOrderOption.value;
+      });
+      // Replace the first list with the new one
+      const sortedBooks = await axios.get(
+        `/book/sort/?sortBy=${sortBy}&order=${sortOrder}`
+      );
+      console.log(sortedBooks, "LOL");
+    } catch {
+      console.log("Couldn't order books");
+    }
+  });
+}
 // Deleting books
 const trashCans = document.querySelectorAll(".fa-trash");
 trashCans.forEach((trashCan) => {

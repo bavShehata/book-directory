@@ -7,6 +7,9 @@ const bookControllers = require("../controllers/bookControllers");
 //Get all books
 router.get("/", bookControllers.allBooks);
 
+//Get books sorted index
+router.get(`/sort/`, bookControllers.allBooksSorted);
+
 //New book form
 router.get("/add", bookControllers.bookForm);
 

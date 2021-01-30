@@ -56,6 +56,7 @@ main {
 }
 .btn {
   padding: 2rem;
+  font-family: "Crimson Text", serif;
 }
 h1 {
   font-size: 2.5rem;
@@ -181,6 +182,28 @@ header a {
 #listPage dd {
   padding: 0 10px;
   display: none;
+}
+#listPage #sort {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  border: 4px solid var(--main-clr);
+  border-radius: 5px;
+  padding: 5px 0;
+}
+#listPage #sort select {
+  width: auto;
+  margin-right: 10px;
+}
+#listPage #sort label {
+  margin-right: 10px;
+}
+#listPage #sort .btn {
+  padding: 0;
+  width: 50px;
+  align-items: center;
 }
 #listPage .book {
   padding: 5px;

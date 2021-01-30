@@ -5,10 +5,23 @@ module.exports = {
   // Showing all user books
   allBooks: async (req, res) => {
     try {
-      const books = await Book.find();
+      const books = await Book.find().sort({ _id: -1 });
       res.render("bookViews/index", { title: "Home", books });
     } catch {
       console.log("Your books could not be viewed");
+    }
+  },
+  // Showing all user books sorted
+  allBooksSorted: async (req, res) => {
+    try {
+      const sortBy = req.query.sortBy;
+      var orderQuery = {};
+      orderQuery[sortBy] = req.query.order;
+      console.log(orderQuery);
+      const books = await Book.find().sort(orderQuery);
+      res.send();
+    } catch (e) {
+      console.log("Couldn't order books\n", e);
     }
   },
   // A form where a new book can be added
@@ -108,15 +121,13 @@ module.exports = {
   // Get a specific book
   getBook: async (req, res) => {
     try {
-      const books = await Book.find();
+      const books = await Book.find().sort({ _id: -1 });
       const book = await Book.findOne({ _id: req.params.id });
       try {
         console.log("Book info: ", book.title);
         res.render("bookViews/book", { title: "Book Directory", book });
       } catch {
-        console.log("asdasdas");
         res.render("bookViews/index", { title: "Home", msg: "", books });
-        console.log("obj");
       }
     } catch {
       ("Book couldn't be found");
