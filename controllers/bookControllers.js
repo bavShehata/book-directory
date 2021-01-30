@@ -17,9 +17,9 @@ module.exports = {
       const sortBy = req.query.sortBy;
       var orderQuery = {};
       orderQuery[sortBy] = req.query.order;
-      console.log(orderQuery);
       const books = await Book.find().sort(orderQuery);
-      res.send();
+      console.log("Books Ordered Successfully");
+      res.send(books);
     } catch (e) {
       console.log("Couldn't order books\n", e);
     }

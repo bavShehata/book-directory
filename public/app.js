@@ -48,12 +48,42 @@ if (sortBtn != undefined) {
         if (sortOrderOption.checked) sortOrder = sortOrderOption.value;
       });
       // Replace the first list with the new one
-      const sortedBooks = await axios.get(
+      const bookSection = document.querySelector("#allBooks");
+      var sortedBooks = await axios.get(
         `/book/sort/?sortBy=${sortBy}&order=${sortOrder}`
       );
-      console.log(sortedBooks, "LOL");
-    } catch {
-      console.log("Couldn't order books");
+      sortedBooks = sortedBooks.data;
+      bookSection.innerHTML = "";
+      sortedBooks.forEach((book) => {
+        bookSection.innerHTML += `<div class="book" data-bookID="${book._id}">
+          <a href="/book/${
+            book._id
+          }" class="bookLink"><h3>Title: <span class="editable title">${
+          book.title
+        }</span></h3></a>
+          <br />
+          <h4>Year: <span class="editable year">${
+            book.year != 0 ? book.year : "Unknown"
+          }</span></h4>
+          <br />
+          <h4>Author: <span class="editable author">${book.author}</span></h4>
+          <br />
+          <dl>
+            <dt>Description</dt>
+            <dd class="editable description">${book.description}</dd>
+            <dt>Notes</dt>
+            <dd class="editable notes">${
+              book.notes != "" ? book.notes : "None"
+            }</dd>
+            <dt>Favorite quotes</dt>
+            <dd class="editable quotes">${
+              book.quotes != "" ? book.quotes : "None"
+            }</dd>
+          </dl>
+        </div>`;
+      });
+    } catch (e) {
+      console.log("Couldn't order books\n", e);
     }
   });
 }
