@@ -24,6 +24,16 @@ module.exports = {
       console.log("Couldn't order books\n", e);
     }
   },
+  // Delete all user books
+  allBooksDeleted: async (req, res) => {
+    try {
+      await Book.deleteMany();
+      console.log("All user books deleted");
+      res.send();
+    } catch (e) {
+      console.log("Couldn't delete user books\n", e);
+    }
+  },
   // A form where a new book can be added
   bookForm: async (req, res) => {
     try {

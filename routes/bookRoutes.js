@@ -7,6 +7,9 @@ const bookControllers = require("../controllers/bookControllers");
 //Get all books
 router.get("/", bookControllers.allBooks);
 
+//Delete all books
+router.delete("/", bookControllers.allBooksDeleted);
+
 //Get books sorted index
 router.get(`/sort/`, bookControllers.allBooksSorted);
 

@@ -1,5 +1,6 @@
 // TODO: Add pagination to search and index pages.
-// TODO: Add a delete all books in index page.
+// TODO: Add a delete all books in index page. DONE!!!
+// TODO: A customizable confirmation for delete
 // TODO: Add responsivity for mobile and remove the hovers
 
 // Show/hide navigation on mobile
@@ -87,7 +88,23 @@ if (sortBtn != undefined) {
     }
   });
 }
-// Deleting books
+// Delete all books
+const deleteBtn = document.querySelector("#delete .btn");
+if (deleteBtn != undefined) {
+  deleteBtn.addEventListener("click", async () => {
+    try {
+      if (confirm("All books will be deleted!")) {
+        await axios.delete("/book");
+        alert("All books deleted successfully");
+        location.reload();
+      }
+    } catch (e) {
+      console.log("Couldn't delete books\n", e);
+    }
+  });
+}
+
+// Deleting a specific book
 const trashCans = document.querySelectorAll(".fa-trash");
 trashCans.forEach((trashCan) => {
   trashCan.addEventListener("click", async () => {
