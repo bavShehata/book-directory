@@ -5,23 +5,23 @@ module.exports = {
   // Showing all user books
   allBooks: async (req, res) => {
     try {
-      const books = await Book.find().sort({ _id: -1 });
-      res.render("bookViews/index", { title: "Home", books });
-    } catch {
-      console.log("Your books could not be viewed");
-    }
-  },
-  // Showing all user books sorted
-  allBooksSorted: async (req, res) => {
-    try {
       const sortBy = req.query.sortBy;
       var orderQuery = {};
-      orderQuery[sortBy] = req.query.order;
-      const books = await Book.find().sort(orderQuery);
-      console.log("Books Ordered Successfully");
-      res.send(books);
+      if (sortBy != undefined) {
+        // If the user sorted them
+        orderQuery[sortBy] = req.query.order;
+        const books = await Book.find().sort(orderQuery);
+        console.log("Books Ordered Successfully");
+        res.send(books);
+      } else {
+        // Default sorting
+        orderQuery["_id"] = "-1";
+        const books = await Book.find().sort(orderQuery);
+        console.log("Books with their default order successfully");
+        res.render("bookViews/index", { title: "Home", books });
+      }
     } catch (e) {
-      console.log("Couldn't order books\n", e);
+      console.log("Couldn't order and/or show books\n", e);
     }
   },
   // Delete all user books
@@ -192,10 +192,11 @@ module.exports = {
       res.redirect(`book/browse/`);
     }
   },
-  // Browse books
+  // Search browse books
   browseBooksSearch: async (req, res) => {
     try {
-      var searchQuery = req.params.query;
+      var searchQuery = req.query.searchQuery;
+      var startIndex = req.query.startIndex;
       console.log("QUERY: ", searchQuery);
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}`

@@ -4,14 +4,11 @@ const router = express.Router();
 //Requiring the controllers
 const bookControllers = require("../controllers/bookControllers");
 
-//Get all books
-router.get("/", bookControllers.allBooks);
+//Get all books (sorted or not)
+router.get(`/`, bookControllers.allBooks);
 
 //Delete all books
 router.delete("/", bookControllers.allBooksDeleted);
-
-//Get books sorted index
-router.get(`/sort/`, bookControllers.allBooksSorted);
 
 //New book form
 router.get("/add", bookControllers.bookForm);

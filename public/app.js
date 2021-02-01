@@ -1,5 +1,4 @@
 // TODO: Add pagination to search and index pages.
-// TODO: Add a delete all books in index page. DONE!!!
 // TODO: A customizable confirmation for delete
 // TODO: Add responsivity for mobile and remove the hovers
 
@@ -51,7 +50,7 @@ if (sortBtn != undefined) {
       // Replace the first list with the new one
       const bookSection = document.querySelector("#allBooks");
       var sortedBooks = await axios.get(
-        `/book/sort/?sortBy=${sortBy}&order=${sortOrder}`
+        `/book/?sortBy=${sortBy}&order=${sortOrder}`
       );
       sortedBooks = sortedBooks.data;
       bookSection.innerHTML = "";
