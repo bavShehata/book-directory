@@ -1,6 +1,7 @@
-// TODO: Add pagination to search and index pages.
-// TODO: A customizable confirmation for delete
+// TODO: Customized delete confirmation
+// TODO: Customized alerts
 // TODO: Add responsivity for mobile and remove the hovers
+// TODO: User databse
 
 // Show/hide navigation on mobile
 const hamMenu = document.querySelector("header i");
@@ -119,12 +120,12 @@ if (bookQuery) {
     console.log("EVENT key: ", e.keyCode);
     if (e.keyCode == 13) {
       bookQuery = document.querySelector("#browse #search input").value;
-      window.location.replace(`/book/browse/${bookQuery}`);
+      window.location.replace(`/book/browse?q=${bookQuery}&p=1`);
     }
   });
   searchBtn.addEventListener("click", () => {
     bookQuery = document.querySelector("#browse #search input").value;
-    window.location.replace(`/book/browse/${bookQuery}`);
+    window.location.replace(`/book/browse?q=${bookQuery}&p=1`);
   });
 }
 // Editing books

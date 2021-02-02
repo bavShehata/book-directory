@@ -10,6 +10,9 @@ router.get(`/`, bookControllers.allBooks);
 //Delete all books
 router.delete("/", bookControllers.allBooksDeleted);
 
+//404 page
+router.get("/404", bookControllers.error404);
+
 //New book form
 router.get("/add", bookControllers.bookForm);
 
@@ -18,9 +21,6 @@ router.post("/add", bookControllers.addBook);
 
 //Browsing books
 router.get("/browse", bookControllers.browseBooks);
-
-//Searching browsing books
-router.get("/browse/:query", bookControllers.browseBooksSearch);
 
 //Delete a book by ID
 router.delete("/:id", bookControllers.deleteBook);

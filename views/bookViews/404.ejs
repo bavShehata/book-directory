@@ -1,0 +1,18 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+<body>
+  <%- include("../partials/header.ejs") %>
+    <main>
+      <div id="404">
+        <h2>404 Error.</h2>
+        <%
+        const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        var searchQuery =
+          possible[Math.floor(Math.random() * (possible.length - 1))];
+        %>
+        <p>Unfortunately, there were no results of your searched book. You can either <a href='/book/browse?q=<%=searchQuery%>&p=1'>browse for more books</a>, or <a href="/book/?sortBy=_id&order=-1&p=1">check your saved books</a>.</p>
+      </div>
+    </main>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>

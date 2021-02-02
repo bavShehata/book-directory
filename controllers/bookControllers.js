@@ -5,20 +5,31 @@ module.exports = {
   // Showing all user books
   allBooks: async (req, res) => {
     try {
+      // Sorting the books
       const sortBy = req.query.sortBy;
       const sortOrder = req.query.order;
+      const booksPerPage = 10;
+      const pageNumber = req.query.p;
+      const bookIndex = (pageNumber - 1) * booksPerPage;
       const orderQuery = {};
       orderQuery[sortBy] = sortOrder;
       books = await Book.find().sort(orderQuery);
-      console.log("Books Ordered Successfully");
+      // Pagination
+      const maxResult = books.length;
+      const maxPage = Math.ceil(maxResult / 10);
+      console.log(`${books.length} Books Ordered Successfully`);
+      books = books.slice(bookIndex, bookIndex + booksPerPage);
       res.render("bookViews/index", {
         title: "Home",
         books,
         sortBy,
         sortOrder,
+        pageNumber,
+        maxPage,
       });
     } catch (e) {
       console.log("Couldn't order and/or show books\n", e);
+      res.redirect(`/book/404`);
     }
   },
   // Delete all user books
@@ -143,21 +154,30 @@ module.exports = {
   // Browse books
   browseBooks: async (req, res) => {
     try {
+      var searchQuery = req.query.q;
+      var pageNumber = req.query.p;
+      console.log(searchQuery, pageNumber);
+      var startIndex = (pageNumber - 1) * 10;
       console.log("No query");
-      const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      searchQuery = possible[Math.floor(Math.random() * (possible.length - 1))];
-      RGNumber = Math.floor(Math.random() * 30); // the number of current books for the query "e" is 254
-
       // Get 10 random books
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${RGNumber}`
+      var response = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=800`
+      );
+      const maxResult = response.data.totalItems - 1;
+      console.log("NUMBER OF BOOKS: ", maxResult);
+      const maxPage = Math.ceil(maxResult / 10);
+      console.log("MAX PAGE: ", maxPage);
+      response = await axios.get(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`
+      );
+      console.log(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`
       );
       const books = response.data.items;
       for (var i = 0; i < 10; i++) {
         const bookInfo = response.data.items[i].volumeInfo;
         const bookTitle = bookInfo.title;
         console.log(bookTitle);
-
         var bookYear = bookInfo.publishedDate;
         if (bookYear !== undefined)
           //Get only the year of the book
@@ -183,10 +203,16 @@ module.exports = {
         if (bookDescription === undefined) bookDescription = "None";
       }
       console.log("Books shown to browse");
-      res.render("bookViews/browse", { title: "Browse", books });
-    } catch {
-      console.log("Default browse page couldn't be displayed");
-      res.redirect(`book/browse/`);
+      res.render(`bookViews/browse`, {
+        title: "Browse",
+        books,
+        pageNumber,
+        searchQuery,
+        maxPage,
+      });
+    } catch (e) {
+      console.log("Default browse page couldn't be displayed: ", e);
+      res.redirect(`/book/404`);
     }
   },
   // Search browse books
@@ -238,5 +264,8 @@ module.exports = {
       console.log("Your searched browse page couldn't be displayed");
       res.redirect(`book/browse/${bookQuery}`);
     }
+  },
+  error404: async (req, res) => {
+    res.render("bookViews/404", { title: 404 });
   },
 };

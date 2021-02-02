@@ -2,11 +2,16 @@
   <a href="/book">
     <img src="/assets/favicon.png" alt="Logo" />
   </a>
+  <%
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var searchQuery =
+    possible[Math.floor(Math.random() * (possible.length - 1))];
+  %>
   <h1><%=title%></h1>
   <i class="fas fa-bars"></i>
   <ul>
-    <a href="/book/?sortBy=_id&order=-1" class="active"><li>My books</li></a>
+    <a href="/book/?sortBy=_id&order=-1&p=1" class="active"><li>My books</li></a>
     <a href="/book/add"><li>Add a book</li></a>
-    <a href="/book/browse"><li>Browse</li></a>
+    <a href='/book/browse?q=<%=searchQuery%>&p=1'><li>Browse</li></a>
   </ul>
 </header>

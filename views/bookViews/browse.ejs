@@ -37,20 +37,31 @@
           var bookDescription = bookInfo.description;
           if (bookDescription === undefined) bookDescription = "None";
           %>
-          <div class="book" data-bookID="<%=bookID%>">
-            <button class="btn">Add</button>
-            <h3>Title: <span class="editable title"><%=bookTitle%></span></h3>
-            <br />
-            <h4>Year: <span class="editable year"><%=bookYear%></span></h4>
-            <br />
-            <h4>Author: <span class="editable author"><%=bookAuthors%></span></h4>
-            <br />
-            <dl>
-              <dt>Description</dt>
-              <dd class="editable description"><%=bookDescription%></dd>
-            </dl>
-          </div>
+          <section id="books">
+            <article class="book" data-bookID="<%=bookID%>">
+              <button class="btn">Add</button>
+              <h3>Title: <span class="editable title"><%=bookTitle%></span></h3>
+              <br />
+              <h4>Year: <span class="editable year"><%=bookYear%></span></h4>
+              <br />
+              <h4>Author: <span class="editable author"><%=bookAuthors%></span></h4>
+              <br />
+              <dl>
+                <dt>Description</dt>
+                <dd class="editable description"><%=bookDescription%></dd>
+              </dl>
+            </article>
+          </section>
         <% }%>
+        <section id="pagination">
+          <% if (pageNumber > 1) {%>
+          <a href='/book/browse?q=<%=searchQuery%>&p=<%=pageNumber-1%>' class="left"><i class="fas fa-arrow-left"></i></a>
+          <% } %>
+          <h2 id="currentPage"><%=pageNumber%></h2>
+          <% if (pageNumber < maxPage) {%>
+          <a href="/book/browse?q=<%=searchQuery%>&p=<%=parseInt(pageNumber)+1%>" class="right"><i class="fas fa-arrow-right"></i></a>
+          <% } %>
+        </section>
       </div>
     </main>
     <%- include("../partials/footer.ejs") %>

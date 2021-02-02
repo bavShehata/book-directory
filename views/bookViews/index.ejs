@@ -43,6 +43,15 @@
         <section id="delete">
           <button type="button" name="delete" class="btn">Delete All</button>
         </section>
+        <section id="pagination">
+          <% if (pageNumber > 1) {%>
+          <a href='/book/?sortBy=<%=sortBy%>&order=<%=sortOrder%>&p=<%=pageNumber-1%>' class="left"><i class="fas fa-arrow-left"></i></a>
+          <% } %>
+          <h2 id="currentPage"><%=pageNumber%></h2>
+          <% if (pageNumber < maxPage) {%>
+          <a href="/book/?sortBy=<%=sortBy%>&order=<%=sortOrder%>&p=<%=parseInt(pageNumber)+1%>" class="right"><i class="fas fa-arrow-right"></i></a>
+          <% } %>
+        </section>
       </div>
     </main>
     <%- include("../partials/footer.ejs") %>

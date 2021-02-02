@@ -149,12 +149,12 @@ header a {
   background-color: white;
   text-align: left;
 }
-#listPage h2 {
+#listPage .book h2 {
   text-align: center;
   padding: 30px 0;
 }
-#listPage h3,
-#listPage h4 {
+#listPage .book h3,
+#listPage .book h4 {
   display: inline-block;
   width: 100%;
   background-color: var(--secondary-clr);
@@ -209,6 +209,7 @@ header a {
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-bottom: 20px;
 }
 #listPage #delete .btn {
   width: 20%;
@@ -326,7 +327,7 @@ header a {
 #browse #search i:hover {
   background-color: #888;
 }
-#browse h3 {
+#browse .book h3 {
   padding-right: 20%;
 }
 #browse .btn {
@@ -343,6 +344,15 @@ header a {
 #browse .btn:hover {
   background-color: var(--main-clr);
   color: var(--secondary-clr);
+}
+#listPage #pagination {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+#listPage #pagination h2 {
+  margin: 0 15px;
 }
 /*Footer*/
 footer {
