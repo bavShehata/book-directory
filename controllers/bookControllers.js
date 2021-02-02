@@ -6,20 +6,17 @@ module.exports = {
   allBooks: async (req, res) => {
     try {
       const sortBy = req.query.sortBy;
-      var orderQuery = {};
-      if (sortBy != undefined) {
-        // If the user sorted them
-        orderQuery[sortBy] = req.query.order;
-        const books = await Book.find().sort(orderQuery);
-        console.log("Books Ordered Successfully");
-        res.send(books);
-      } else {
-        // Default sorting
-        orderQuery["_id"] = "-1";
-        const books = await Book.find().sort(orderQuery);
-        console.log("Books with their default order successfully");
-        res.render("bookViews/index", { title: "Home", books });
-      }
+      const sortOrder = req.query.order;
+      const orderQuery = {};
+      orderQuery[sortBy] = sortOrder;
+      books = await Book.find().sort(orderQuery);
+      console.log("Books Ordered Successfully");
+      res.render("bookViews/index", {
+        title: "Home",
+        books,
+        sortBy,
+        sortOrder,
+      });
     } catch (e) {
       console.log("Couldn't order and/or show books\n", e);
     }

@@ -8,14 +8,14 @@
         <section id="sort">
           <label for="sort">Sort by: </label>
           <select id="cars" name="sort">
-            <option value="_id" selected>Date added</option>
-            <option value="year">Year published</option>
-            <option value="author">Author</option>
-            <option value="title">Title</option>
+            <option value="_id" <%if (sortBy == "_id") {%> selected <% } %> >Date added</option>
+            <option value="year" <%if (sortBy == "year") {%> selected <% } %>>Year published</option>
+            <option value="author" <%if (sortBy == "author") {%> selected <% } %>>Author</option>
+            <option value="title" <%if (sortBy == "title") {%> selected <% } %>>Title</option>
           </select>
-          <input type="radio" id="ascending" name="sortOrder" value="1" >
+          <input type="radio" id="ascending" name="sortOrder" value="1" <%if (sortOrder == 1) {%> checked <% } %> >
           <label for="ascending">Ascending</label>
-          <input type="radio" id="descending" name="sortOrder" value="-1" checked>
+          <input type="radio" id="descending" name="sortOrder" value="-1" <%if (sortOrder == -1) {%> checked <% } %>>
           <label for="descending">Descending</label>
           <button type="button" class="btn" name="submit">Sort</button>
         </section>
