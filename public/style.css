@@ -85,11 +85,6 @@ label {
 dd {
   white-space: pre-line;
 }
-/* label::before {
-  content: "";
-  display: block;
-} */
-/*Header*/
 header {
   background-color: var(--main-clr);
   display: flex;
@@ -148,6 +143,9 @@ header a {
   margin-bottom: 50px;
   background-color: white;
   text-align: left;
+}
+#listPage h2 {
+  text-align: center;
 }
 #listPage .book h2 {
   text-align: center;
@@ -248,6 +246,10 @@ header a {
 }
 .book h4 {
   margin-top: 1rem;
+}
+#noBooks {
+  text-align: center;
+  margin-top: 100px;
 }
 /*New*/
 #new h2 {

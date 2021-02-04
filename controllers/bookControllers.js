@@ -158,7 +158,6 @@ module.exports = {
       var pageNumber = req.query.p;
       console.log(searchQuery, pageNumber);
       var startIndex = (pageNumber - 1) * 10;
-      console.log("No query");
       // Get 10 random books
       var response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=800`
@@ -173,7 +172,19 @@ module.exports = {
       console.log(
         `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`
       );
-      const books = response.data.items;
+      var books = response.data.items;
+      // If there are no search results
+      if (books == undefined) {
+        books = [];
+        console.log("No results to be shown");
+        res.render(`bookViews/browse`, {
+          title: "Browse",
+          books,
+          pageNumber,
+          searchQuery,
+          maxPage,
+        });
+      }
       for (var i = 0; i < 10; i++) {
         const bookInfo = response.data.items[i].volumeInfo;
         const bookTitle = bookInfo.title;

@@ -9,7 +9,9 @@
           <input type="text" name="search" placeholder="Book title or author"/>
           <i class="fas fa-search"></i>
         </section>
-        <% for (var book of books) {
+        <%
+          if (books.length > 0){
+          for (var book of books) {
           const bookInfo = book.volumeInfo;
           const bookID = book.id;
           const bookTitle = bookInfo.title;
@@ -62,6 +64,13 @@
           <a href="/book/browse?q=<%=searchQuery%>&p=<%=parseInt(pageNumber)+1%>" class="right"><i class="fas fa-arrow-right"></i></a>
           <% } %>
         </section>
+        <% } else {%>
+          <section id="noBooks">
+            <h3>There are no books to display :(</h3>
+            <p>Looks like we have no books that match what you are looking for. You can either broaden your search or you can <a href="/book/add">manually add the book</a></p>
+          </section>
+        <% } %>
+
       </div>
     </main>
     <%- include("../partials/footer.ejs") %>

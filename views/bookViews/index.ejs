@@ -2,56 +2,67 @@
 <%- include("../partials/head.ejs") %>
 <body>
   <%- include("../partials/header.ejs") %>
-    <main id="current" class="listPage">
+    <main id="current">
       <div class="container" id="listPage">
         <h2>Current books</h2>
-        <section id="sort">
-          <label for="sort">Sort by: </label>
-          <select id="cars" name="sort">
-            <option value="_id" <%if (sortBy == "_id") {%> selected <% } %> >Date added</option>
-            <option value="year" <%if (sortBy == "year") {%> selected <% } %>>Year published</option>
-            <option value="author" <%if (sortBy == "author") {%> selected <% } %>>Author</option>
-            <option value="title" <%if (sortBy == "title") {%> selected <% } %>>Title</option>
-          </select>
-          <input type="radio" id="ascending" name="sortOrder" value="1" <%if (sortOrder == 1) {%> checked <% } %> >
-          <label for="ascending">Ascending</label>
-          <input type="radio" id="descending" name="sortOrder" value="-1" <%if (sortOrder == -1) {%> checked <% } %>>
-          <label for="descending">Descending</label>
-          <button type="button" class="btn" name="submit">Sort</button>
-        </section>
-        <section id="allBooks">
-          <% for (var book of books) {
-            %>
-            <div class="book" data-bookID="<%=book._id%>">
-              <a href="/book/<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
-              <br />
-              <h4>Year: <span class="editable year"><%=book.year!=0?book.year:"Unknown"%></span></h4>
-              <br />
-              <h4>Author: <span class="editable author"><%=book.author%></span></h4>
-              <br />
-              <dl>
-                <dt>Description</dt>
-                <dd class="editable description"><%=book.description%></dd>
-                <dt>Notes</dt>
-                <dd class="editable notes"><%=book.notes!=""?book.notes:"None"%></dd>
-                <dt>Favorite quotes</dt>
-                <dd class="editable quotes"><%=book.quotes!=""?book.quotes:"None"%></dd>
-              </dl>
-            </div>
-          <% }%>
-        </section>
-        <section id="delete">
-          <button type="button" name="delete" class="btn">Delete All</button>
-        </section>
-        <section id="pagination">
-          <% if (pageNumber > 1) {%>
-          <a href='/book/?sortBy=<%=sortBy%>&order=<%=sortOrder%>&p=<%=pageNumber-1%>' class="left"><i class="fas fa-arrow-left"></i></a>
-          <% } %>
-          <h2 id="currentPage"><%=pageNumber%></h2>
-          <% if (pageNumber < maxPage) {%>
-          <a href="/book/?sortBy=<%=sortBy%>&order=<%=sortOrder%>&p=<%=parseInt(pageNumber)+1%>" class="right"><i class="fas fa-arrow-right"></i></a>
-          <% } %>
-        </section>
+        <% if (books.length > 0) { %>
+            <section id="sort">
+              <label for="sort">Sort by: </label>
+              <select id="cars" name="sort">
+                <option value="_id" <%if (sortBy == "_id") {%> selected <% } %> >Date added</option>
+                <option value="year" <%if (sortBy == "year") {%> selected <% } %>>Year published</option>
+                <option value="author" <%if (sortBy == "author") {%> selected <% } %>>Author</option>
+                <option value="title" <%if (sortBy == "title") {%> selected <% } %>>Title</option>
+              </select>
+              <input type="radio" id="ascending" name="sortOrder" value="1" <%if (sortOrder == 1) {%> checked <% } %> >
+              <label for="ascending">Ascending</label>
+              <input type="radio" id="descending" name="sortOrder" value="-1" <%if (sortOrder == -1) {%> checked <% } %>>
+              <label for="descending">Descending</label>
+              <button type="button" class="btn" name="submit">Sort</button>
+            </section>
+            <section id="allBooks">
+            <% for (var book of books) {
+              %>
+              <div class="book" data-bookID="<%=book._id%>">
+                <a href="/book/<%=book._id%>" class="bookLink"><h3>Title: <span class="editable title"><%=book.title%></span></h3></a>
+                <br />
+                <h4>Year: <span class="editable year"><%=book.year!=0?book.year:"Unknown"%></span></h4>
+                <br />
+                <h4>Author: <span class="editable author"><%=book.author%></span></h4>
+                <br />
+                <dl>
+                  <dt>Description</dt>
+                  <dd class="editable description"><%=book.description%></dd>
+                  <dt>Notes</dt>
+                  <dd class="editable notes"><%=book.notes!=""?book.notes:"None"%></dd>
+                  <dt>Favorite quotes</dt>
+                  <dd class="editable quotes"><%=book.quotes!=""?book.quotes:"None"%></dd>
+                </dl>
+              </div>
+            <% }%>
+          </section>
+          <section id="delete">
+            <button type="button" name="delete" class="btn">Delete All</button>
+          </section>
+          <section id="pagination">
+            <% if (pageNumber > 1) {%>
+            <a href='/book/?sortBy=<%=sortBy%>&order=<%=sortOrder%>&p=<%=pageNumber-1%>' class="left"><i class="fas fa-arrow-left"></i></a>
+            <% } %>
+            <h2 id="currentPage"><%=pageNumber%></h2>
+            <% if (pageNumber < maxPage) {%>
+            <a href="/book/?sortBy=<%=sortBy%>&order=<%=sortOrder%>&p=<%=parseInt(pageNumber)+1%>" class="right"><i class="fas fa-arrow-right"></i></a>
+            <% } %>
+          </section>
+        <% }else {
+          const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+          var searchQuery =
+            possible[Math.floor(Math.random() * (possible.length - 1))];
+          %>
+          <section id="noBooks">
+            <h3>There are no books to display :(</h3>
+            <p>Looks like you have not saved any books yet. To save a book, you can either <a href='/book/browse?q=<%=searchQuery%>&p=1'>Browse books</a> from Google Books or <a href="/book/add">manually add one</a></p>
+          </section>
+        <% } %>
       </div>
     </main>
     <%- include("../partials/footer.ejs") %>

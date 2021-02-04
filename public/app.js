@@ -2,6 +2,7 @@
 // TODO: Customized alerts
 // TODO: Add responsivity for mobile and remove the hovers
 // TODO: User databse
+// TODO: Styling the #noBooks section
 
 // Show/hide navigation on mobile
 const hamMenu = document.querySelector("header i");
