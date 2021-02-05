@@ -31,4 +31,7 @@ router.put("/:id", bookControllers.updateBook);
 //Details of a book
 router.get("/:id", bookControllers.getBook);
 
+//404 error
+router.use(bookControllers.error404);
+
 module.exports = router;

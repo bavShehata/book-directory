@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
 }
 :root {
   --main-clr: #8c4e12;
@@ -85,6 +86,7 @@ label {
 dd {
   white-space: pre-line;
 }
+/* Header */
 header {
   background-color: var(--main-clr);
   display: flex;
@@ -172,15 +174,15 @@ header a {
   font-weight: bold;
   border-radius: 5px;
 }
-#listPage .fa-minus-circle,
-#listPage .fa-plus-circle {
+.fa-minus-circle,
+.fa-plus-circle {
   float: right;
 }
 #listPage dd {
   padding: 0 10px;
   display: none;
 }
-#listPage #sort {
+#sort {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -190,46 +192,46 @@ header a {
   border-radius: 5px;
   padding: 5px 0;
 }
-#listPage #sort select {
+#sort select {
   width: auto;
   margin-right: 10px;
 }
-#listPage #sort label {
+#sort label {
   margin-right: 10px;
 }
-#listPage #sort .btn {
+#sort .btn {
   padding: 0;
   width: 50px;
   align-items: center;
 }
-#listPage #delete {
+#delete {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   margin-bottom: 20px;
 }
-#listPage #delete .btn {
+#delete .btn {
   width: 20%;
   background-color: var(--main-clr);
   color: var(--secondary-clr);
 }
-#listPage .book {
+.book {
   padding: 5px;
   margin-bottom: 50px;
   position: relative;
   border: 4px solid var(--main-clr);
   border-radius: 5px;
 }
-.book .fa-trash {
+.fa-trash {
   position: absolute;
   top: 0px;
   right: 10px;
   font-size: 2.5rem;
   cursor: pointer;
 }
-.book .fa-edit,
-.book .fa-save {
+.fa-edit,
+.fa-save {
   position: absolute;
   top: 0px;
   right: 45px;
@@ -282,7 +284,7 @@ header a {
   width: min(90%, 700px);
   margin-top: 10px;
 }
-#new #confirm {
+#confirm {
   padding: 1rem;
   color: var(--grey);
 }
@@ -297,9 +299,6 @@ header a {
   display: inline-block;
   padding-right: 10%;
 }
-#specific .book {
-  position: relative;
-}
 #specific .editingMinor {
   width: 100%;
 }
@@ -308,7 +307,7 @@ header a {
   height: 50px;
 }
 /*Browse*/
-#browse #search {
+#search {
   width: 100%;
   margin-bottom: 20px;
   font-size: 2.5rem;
@@ -317,16 +316,16 @@ header a {
   justify-content: center;
   background-color: #ccc;
 }
-#browse #search input {
+#search input {
   width: 100%;
   font-size: 2rem;
   padding: 0.2rem 0.1rem;
 }
-#browse #search i {
+#search i {
   padding: 0.3rem;
   cursor: pointer;
 }
-#browse #search i:hover {
+#search i:hover {
   background-color: #888;
 }
 #browse .book h3 {
@@ -341,19 +340,19 @@ header a {
   right: 5px;
   cursor: pointer;
   padding: 2rem;
+  z-index: 1;
+  transition: background 0.4s;
 }
-
-#browse .btn:hover {
-  background-color: var(--main-clr);
-  color: var(--secondary-clr);
+#browse .checked {
+  background-color: #00ff00;
 }
-#listPage #pagination {
+#pagination {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
 }
-#listPage #pagination h2 {
+#pagination h2 {
   margin: 0 15px;
 }
 /*Footer*/

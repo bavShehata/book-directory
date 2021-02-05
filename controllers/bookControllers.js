@@ -8,6 +8,8 @@ module.exports = {
       // Sorting the books
       const sortBy = req.query.sortBy;
       const sortOrder = req.query.order;
+      if (req.query.order == undefined || req.query.sortBy == undefined)
+        res.redirect(`/book/?sortBy=_id&order=-1&p=1`);
       const booksPerPage = 10;
       const pageNumber = req.query.p;
       const bookIndex = (pageNumber - 1) * booksPerPage;
@@ -29,7 +31,6 @@ module.exports = {
       });
     } catch (e) {
       console.log("Couldn't order and/or show books\n", e);
-      res.redirect(`/book/404`);
     }
   },
   // Delete all user books
@@ -46,11 +47,11 @@ module.exports = {
   bookForm: async (req, res) => {
     try {
       res.render("bookViews/add", { title: "Add", added: 0 });
-    } catch {
-      console.log("Book Form couldn't be viewed");
+    } catch (e) {
+      console.log("Book Form couldn't be viewed\n", e);
     }
   },
-  // The process of adding a book from the form to the user
+  // The process of adding a book to the user
   addBook: async (req, res) => {
     try {
       if (isNaN(req.body.year)) req.body.year = 0;
@@ -67,7 +68,7 @@ module.exports = {
         $and: [{ title: req.body.title }, { author: req.body.author }],
       });
       // If it's a unique record, save it to the database
-      if (oldBook === null) {
+      if (oldBook === null || oldBook._id.toString() === req.params.id) {
         await book.save();
         console.log("New book added: ", book.title);
         res.render("bookViews/add", {
@@ -77,20 +78,20 @@ module.exports = {
       } else {
         // Else, prompt to the user that the book already exists
         console.log("This book already exists: ", book.title);
-        res.status(409).send();
+        res.json({ id: oldBook._id });
       }
-    } catch {
-      console.log("Book couldn't be added");
+    } catch (e) {
+      console.log("Book couldn't be added\n", e);
     }
   },
   // deleting a book from the user
   deleteBook: async (req, res) => {
     try {
-      const deletedBook = await Book.findOneAndDelete({ _id: req.params.id });
+      const deletedBook = await Book.findByIdAndDelete(req.params.id);
       console.log("Book deleted: ", deletedBook.title);
       res.send();
-    } catch {
-      console.log("Book couldn't be deleted");
+    } catch (e) {
+      console.log("Book couldn't be deleted\n", e);
     }
   },
   // upading a book for the user
@@ -141,14 +142,11 @@ module.exports = {
     try {
       const books = await Book.find().sort({ _id: -1 });
       const book = await Book.findOne({ _id: req.params.id });
-      try {
-        console.log("Book info: ", book.title);
-        res.render("bookViews/book", { title: "Book Directory", book });
-      } catch {
-        res.render("bookViews/index", { title: "Home", msg: "", books });
-      }
-    } catch {
-      ("Book couldn't be found");
+      console.log("Book retrieved successfully: ", book.title);
+      res.render("bookViews/book", { title: "Book Directory", book });
+    } catch (e) {
+      "Book couldn't be found\n", e;
+      res.render("bookViews/404", { title: 404 });
     }
   },
   // Browse books
@@ -156,20 +154,14 @@ module.exports = {
     try {
       var searchQuery = req.query.q;
       var pageNumber = req.query.p;
-      console.log(searchQuery, pageNumber);
       var startIndex = (pageNumber - 1) * 10;
-      // Get 10 random books
+      // Checking the number of search results
       var response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=800`
       );
       const maxResult = response.data.totalItems - 1;
-      console.log("NUMBER OF BOOKS: ", maxResult);
       const maxPage = Math.ceil(maxResult / 10);
-      console.log("MAX PAGE: ", maxPage);
       response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`
-      );
-      console.log(
         `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&startIndex=${startIndex}`
       );
       var books = response.data.items;
@@ -185,10 +177,10 @@ module.exports = {
           maxPage,
         });
       }
+      // Formating the books for output
       for (var i = 0; i < 10; i++) {
-        const bookInfo = response.data.items[i].volumeInfo;
+        var bookInfo = response.data.items[i].volumeInfo;
         const bookTitle = bookInfo.title;
-        console.log(bookTitle);
         var bookYear = bookInfo.publishedDate;
         if (bookYear !== undefined)
           //Get only the year of the book
@@ -212,10 +204,22 @@ module.exports = {
         } else bookAuthors = "Unknown";
         var bookDescription = bookInfo.description;
         if (bookDescription === undefined) bookDescription = "None";
+        // Check if the book is already in the user database
+        var added;
+        // TODO: Add authors as condition too
+        const oldBook = await Book.findOne({
+          $and: [
+            { title: bookTitle },
+            //{ author: bookAuthors }
+          ],
+        });
+        if (oldBook == null) added = false;
+        else added = true;
+        bookInfo = Object.assign(bookInfo, { added });
       }
       console.log("Books shown to browse");
       res.render(`bookViews/browse`, {
-        title: "Browse",
+        title: `Browse | ${searchQuery}`,
         books,
         pageNumber,
         searchQuery,
@@ -223,7 +227,6 @@ module.exports = {
       });
     } catch (e) {
       console.log("Default browse page couldn't be displayed: ", e);
-      res.redirect(`/book/404`);
     }
   },
   // Search browse books
@@ -231,7 +234,6 @@ module.exports = {
     try {
       var searchQuery = req.query.searchQuery;
       var startIndex = req.query.startIndex;
-      console.log("QUERY: ", searchQuery);
       const response = await axios.get(
         `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}`
       );
@@ -264,15 +266,14 @@ module.exports = {
         var bookDescription = bookInfo.description;
         if (bookDescription === undefined) bookDescription = "None";
       }
-      console.log("Search done");
+      console.log("Search done successfully");
       res.render("bookViews/browse", {
         title: `Browse: ${searchQuery}`,
         books,
       });
-      console.log("Search done for real");
-    } catch {
+    } catch (e) {
       var searchQuery = req.params.query;
-      console.log("Your searched browse page couldn't be displayed");
+      console.log("Your searched browse page couldn't be displayed\n", e);
       res.redirect(`book/browse/${bookQuery}`);
     }
   },

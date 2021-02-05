@@ -38,10 +38,15 @@
           } else bookAuthors = "Unknown";
           var bookDescription = bookInfo.description;
           if (bookDescription === undefined) bookDescription = "None";
+          const added = bookInfo.added;
           %>
           <section id="books">
             <article class="book" data-bookID="<%=bookID%>">
-              <button class="btn">Add</button>
+              <%if(added){%>
+                <button class="btn checked"><i class="fas fa-check"></i></button>
+              <%} else{%>
+                <button class="btn">Add</button>
+              <%}%>
               <h3>Title: <span class="editable title"><%=bookTitle%></span></h3>
               <br />
               <h4>Year: <span class="editable year"><%=bookYear%></span></h4>

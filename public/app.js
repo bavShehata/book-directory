@@ -82,12 +82,12 @@ trashCans.forEach((trashCan) => {
     const bookID = book.dataset.bookid;
 
     // Deleting the book from the database and removing it from the UI
-    console.log("objs");
+    console.log(bookID);
 
     await axios.delete(`./${bookID}`);
     try {
       alert("Book deleted Successfully");
-      document.location = "/book/";
+      document.location = "/book/?sortBy=_id&order=-1&p=1";
     } catch {
       console.log("Book did not get deleted");
     }
@@ -101,13 +101,28 @@ browsingBooks.forEach((book) => {
   const year = book.querySelector(".year").innerHTML;
   const author = book.querySelector(".author").innerHTML;
   const description = book.querySelector(".description").innerHTML;
-  const addBtn = book.querySelector(".btn");
+  const addBtn = book.querySelector(".btn,.checked");
   addBtn.addEventListener("click", async () => {
     try {
-      await axios.post("/book/add", { title, year, author, description });
-      alert("New book added");
-    } catch {
-      alert("Book already exists");
+      const response = await axios.post("/book/add", {
+        title,
+        year,
+        author,
+        description,
+      });
+      console.log(response.data.id);
+      if (!response.data.id) {
+        addBtn.classList.add("checked");
+        addBtn.innerHTML = `<i class="fas fa-check"></i>`;
+      } else {
+        await axios.delete(`/book/${response.data.id}`);
+        addBtn.innerHTML = "Add";
+        addBtn.classList.remove("checked");
+      }
+    } catch (e) {
+      console.log(e);
+      addBtn.classList.toggle("checked");
+      addBtn.innerHTML = "Add";
     }
   });
 });
