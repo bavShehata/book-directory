@@ -1,6 +1,5 @@
 // TODO: Customized delete confirmation
 // TODO: Customized alerts
-// TODO: Add responsivity for mobile and remove the hovers
 // TODO: User databse
 // TODO: Styling the #noBooks section
 
@@ -78,16 +77,15 @@ if (deleteBtn != undefined) {
 const trashCans = document.querySelectorAll(".fa-trash");
 trashCans.forEach((trashCan) => {
   trashCan.addEventListener("click", async () => {
-    const book = trashCan.parentElement;
-    const bookID = book.dataset.bookid;
-
-    // Deleting the book from the database and removing it from the UI
-    console.log(bookID);
-
-    await axios.delete(`./${bookID}`);
     try {
-      alert("Book deleted Successfully");
-      document.location = "/book/?sortBy=_id&order=-1&p=1";
+      const book = trashCan.parentElement;
+      const bookID = book.dataset.bookid;
+      // Deleting a book from the database and removing it from the UI
+      if (confirm("The book will be permanentally deleted from your books!")) {
+        await axios.delete(`./${bookID}`);
+        alert("Book deleted Successfully");
+        document.location = "/book/?sortBy=_id&order=-1&p=1";
+      }
     } catch {
       console.log("Book did not get deleted");
     }
@@ -127,20 +125,20 @@ browsingBooks.forEach((book) => {
   });
 });
 // Search the browsed books
-const searchBtn = document.querySelector("#browse #search i");
-var bookQuery = document.querySelector("#browse #search input");
+const searchBtn = document.querySelector("#search i");
+var bookQuery = document.querySelector("#search input");
 
 if (bookQuery) {
   bookQuery.addEventListener("keydown", (e) => {
     console.log("EVENT: ", e);
     console.log("EVENT key: ", e.keyCode);
     if (e.keyCode == 13) {
-      bookQuery = document.querySelector("#browse #search input").value;
+      bookQuery = document.querySelector("#search input").value;
       window.location.replace(`/book/browse?q=${bookQuery}&p=1`);
     }
   });
   searchBtn.addEventListener("click", () => {
-    bookQuery = document.querySelector("#browse #search input").value;
+    bookQuery = document.querySelector("#search input").value;
     window.location.replace(`/book/browse?q=${bookQuery}&p=1`);
   });
 }

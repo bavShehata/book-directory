@@ -206,12 +206,8 @@ module.exports = {
         if (bookDescription === undefined) bookDescription = "None";
         // Check if the book is already in the user database
         var added;
-        // TODO: Add authors as condition too
         const oldBook = await Book.findOne({
-          $and: [
-            { title: bookTitle },
-            //{ author: bookAuthors }
-          ],
+          $and: [{ title: bookTitle }, { author: bookAuthors }],
         });
         if (oldBook == null) added = false;
         else added = true;
@@ -219,7 +215,7 @@ module.exports = {
       }
       console.log("Books shown to browse");
       res.render(`bookViews/browse`, {
-        title: `Browse | ${searchQuery}`,
+        title: `Browse`,
         books,
         pageNumber,
         searchQuery,
@@ -227,54 +223,6 @@ module.exports = {
       });
     } catch (e) {
       console.log("Default browse page couldn't be displayed: ", e);
-    }
-  },
-  // Search browse books
-  browseBooksSearch: async (req, res) => {
-    try {
-      var searchQuery = req.query.searchQuery;
-      var startIndex = req.query.startIndex;
-      const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}`
-      );
-      const books = response.data.items;
-      for (var i = 0; i < 10; i++) {
-        const bookInfo = response.data.items[i].volumeInfo;
-        const bookTitle = bookInfo.title;
-        console.log(bookTitle);
-        var bookYear = bookInfo.publishedDate;
-        if (bookYear !== undefined)
-          //Get only the year of the book
-          bookYear = bookInfo.publishedDate.substring(0, 4).trim();
-        else bookYear = "Unknown";
-        var bookAuthors = bookInfo.authors;
-        if (bookAuthors !== undefined) {
-          const authors = () => {
-            // Find the number of authors
-            const authorCount = bookInfo.authors.length;
-            var authors = "";
-            for (var j = 0; j < authorCount; j++) {
-              // Add each author and a comma and whitespace
-              authors += `${bookInfo.authors[j]}, `;
-            }
-            // Remove the comma and whitespace of the last author
-            authors = authors.substring(0, authors.length - 2).trim();
-            return authors;
-          };
-          bookAuthors = authors();
-        } else bookAuthors = "Unknown";
-        var bookDescription = bookInfo.description;
-        if (bookDescription === undefined) bookDescription = "None";
-      }
-      console.log("Search done successfully");
-      res.render("bookViews/browse", {
-        title: `Browse: ${searchQuery}`,
-        books,
-      });
-    } catch (e) {
-      var searchQuery = req.params.query;
-      console.log("Your searched browse page couldn't be displayed\n", e);
-      res.redirect(`book/browse/${bookQuery}`);
     }
   },
   error404: async (req, res) => {

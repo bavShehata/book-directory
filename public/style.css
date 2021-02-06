@@ -96,12 +96,10 @@ header {
 }
 header img {
   height: 50px;
-}
-header h1 {
-  top: 13px;
+  z-index: 1;
 }
 header i {
-  padding-right: 65px;
+  padding-right: 40px;
   font-size: 1.6rem;
 }
 header ul {
@@ -112,6 +110,7 @@ header ul {
   width: 140px;
   background-color: var(--main-clr);
   display: none;
+  z-index: 2;
 }
 header li:hover {
   background-color: var(--secondary-clr);
@@ -185,7 +184,9 @@ header a {
 #sort {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px;
   align-items: center;
   margin-bottom: 30px;
   border: 4px solid var(--main-clr);
@@ -203,6 +204,13 @@ header a {
   padding: 0;
   width: 50px;
   align-items: center;
+}
+@media (min-width: 600px) {
+  #sort {
+    flex-direction: row;
+    justify-content: center;
+    height: auto;
+  }
 }
 #delete {
   display: flex;
@@ -225,18 +233,20 @@ header a {
 }
 .fa-trash {
   position: absolute;
-  top: 0px;
+  top: 8px;
   right: 10px;
   font-size: 2.5rem;
   cursor: pointer;
+  z-index: 1;
 }
 .fa-edit,
 .fa-save {
   position: absolute;
-  top: 0px;
+  top: 8px;
   right: 45px;
   font-size: 2.5rem;
   cursor: pointer;
+  z-index: 1;
 }
 .book .fa-save {
   right: 50px;
@@ -292,6 +302,9 @@ header a {
 #specific {
   text-align: left;
 }
+#specific .book {
+  padding: 1rem;
+}
 #specific h2 {
   padding: 0 15%;
 }
@@ -300,9 +313,11 @@ header a {
   padding-right: 10%;
 }
 #specific .editingMinor {
+  margin-top: 6px;
   width: 100%;
 }
 #specific .editingMajor {
+  margin-top: 6px;
   width: 100%;
   height: 50px;
 }
@@ -329,7 +344,7 @@ header a {
   background-color: #888;
 }
 #browse .book h3 {
-  padding-right: 20%;
+  padding-right: 25%;
 }
 #browse .btn {
   background-color: var(--secondary-clr);
@@ -358,6 +373,7 @@ header a {
 /*Footer*/
 footer {
   flex-shrink: 0;
+  margin-top: 20px;
 }
 footer p {
   background-color: var(--secondary-clr);
