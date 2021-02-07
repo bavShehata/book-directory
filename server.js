@@ -27,6 +27,8 @@ app.set("view engine", "ejs");
 
 //Routes
 const bookRoutes = require("./routes/bookRoutes");
-
+const userRoutes = require("./routes/userRoutes");
 //Book Routes
 app.use("/book", bookRoutes);
+//User Routes
+app.use("/", userRoutes);

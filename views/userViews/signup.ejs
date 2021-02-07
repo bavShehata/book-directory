@@ -1,0 +1,26 @@
+<html lang="en">
+<%- include("../partials/head.ejs") %>
+<body>
+  <%- include("../partials/header.ejs") %>
+    <main id="register">
+      <div class="container">
+        <section class="userForm">
+          <form action="/" method="POST">
+            <label for="fname">First Name</label>
+            <input type="text" name="fname" id="fname"/>
+            <label for="lname">Last Name</label>
+            <input type="text" name="lname" id="lname"/>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email"/>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username"/>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password"/>
+            <input type="submit" name="submit" id="submit" value= "Sign Up" class="btn"/>
+          </form>
+        </section>
+      </div>
+    </main>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+</html>
