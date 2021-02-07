@@ -1,10 +1,16 @@
 // TODO: Customized delete confirmation
 // TODO: Customized alerts
-// TODO: User databse
 // TODO: Styling the #noBooks section
 
 // TODO: Sanitizing user input
 
+// User
+const loginForm = document.querySelector("#login form");
+if (loginForm) {
+  loginForm.addEventListener("submit", () => {});
+}
+
+// Book
 // Show/hide navigation on mobile
 const hamMenu = document.querySelector("header i");
 hamMenu.addEventListener("click", () => {

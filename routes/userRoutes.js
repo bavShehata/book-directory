@@ -14,6 +14,8 @@ router.post("/", userControllers.postLogin);
 router.get("/signup", userControllers.getSignup);
 
 //Create an account
-router.post(`/`, userControllers.postSignup);
+router.post(`/signup`, userControllers.postSignup);
 
+//Log out
+router.get("/logout", userControllers.logOut);
 module.exports = router;

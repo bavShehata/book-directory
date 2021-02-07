@@ -5,22 +5,32 @@
     <main id="register">
       <div class="container">
         <section class="userForm">
-          <form action="/" method="POST">
+          <form action="/signup" method="POST">
+            <p class="err" id="<%=err%>"><%=errMsg%></p>
             <label for="fname">First Name</label>
-            <input type="text" name="fname" id="fname"/>
+            <input type="text" name="fname" id="fname" value="<%=fname%>"/>
             <label for="lname">Last Name</label>
-            <input type="text" name="lname" id="lname"/>
+            <input type="text" name="lname" id="lname" value="<%=lname%>" required/>
             <label for="email">Email</label>
-            <input type="email" name="email" id="email"/>
+            <input type="text" name="email" id="email" value="<%=email%>" required/>
             <label for="username">Username</label>
-            <input type="text" name="username" id="username"/>
+            <input type="text" name="username" id="username" value="<%=username%>" required/>
             <label for="password">Password</label>
-            <input type="password" name="password" id="password"/>
+            <input type="password" name="password" id="password" value="<%=password%>" required/>
             <input type="submit" name="submit" id="submit" value= "Sign Up" class="btn"/>
           </form>
         </section>
       </div>
     </main>
+    <script type="text/javascript">
+      const errorPara = document.querySelector(".err")
+      const errorHint = errorPara.id;
+      const err = errorHint.replace( /([A-Z])/g, " " );
+      const spaceIndex = err.indexOf(' ');
+      const errorField = spaceIndex === -1 ? err : err.substr(0, spaceIndex);
+      const errorInput = document.getElementById(`${errorField}`);
+      errorInput.parentNode.insertBefore(errorPara, errorInput.nextSibling);
+    </script>
     <%- include("../partials/footer.ejs") %>
   </body>
 </html>

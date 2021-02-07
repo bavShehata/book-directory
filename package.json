@@ -4,16 +4,19 @@
   "description": "A full-stack project from scratch with html, css, and vanilla JS for frontend, and node.js for backend. The aim is to create a book directory website with its own database. After that, it gets linked to an API of books.",
   "main": "server.js",
   "dependencies": {
+    "argon2": "^0.27.1",
     "axiom": "^0.1.6",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.12",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "validator": "^13.5.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"

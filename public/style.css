@@ -153,6 +153,10 @@ header a {
 .userForm #submit {
   grid-column: 1/3;
 }
+.userForm .err {
+  grid-column: 1/3;
+  color: red;
+}
 /*Book*/
 /*Index*/
 #listPage {

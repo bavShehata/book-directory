@@ -1,0 +1,5 @@
+dbUser = <Enter database user here>
+dbPass = <Enter database password here>
+dbName = <Enter database name here>
+dbProject = <Enter database project here>
+jwtSecret = <Enter JWT secret here>

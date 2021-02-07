@@ -6,10 +6,11 @@
       <div class="container">
         <section class="userForm">
           <form action="/" method="POST">
+            <p class="err"><%=errMsg%></p>
             <label for="username">Username</label>
-            <input type="text" name="username" id="username"/>
+            <input type="text" name="username" id="username" value="<%username%>" required/>
             <label for="password">Password</label>
-            <input type="password" name="password" id="password"/>
+            <input type="password" name="password" id="password" value="<%password%>" required/>
             <input type="submit" name="submit" id="submit" value="Login" class="btn"/>
           </form>
         </section>

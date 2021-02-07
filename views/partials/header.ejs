@@ -10,8 +10,13 @@
   <h1><%=title%></h1>
   <i class="fas fa-bars"></i>
   <ul>
+    <%if (user) {%>
+    <li>Hello <%=user.username%></li>
+    <a href="/logout"><li>Logout</li></a>
+    <%}else{%>
     <a href="/"><li>login</li></a>
     <a href="/signup"><li>Signup</li></a>
+    <%}%>
     <a href="/book/?sortBy=_id&order=-1&p=1" class="active"><li>My books</li></a>
     <a href="/book/add"><li>Add a book</li></a>
     <a href='/book/browse?q=<%=searchQuery%>&p=1'><li>Browse</li></a>
