@@ -3,6 +3,14 @@ const Schema = mongoose.Schema;
 const { isEmail } = require("validator");
 const argon2 = require("argon2");
 
+const BookSchema = new Schema({
+  title: String,
+  year: Number,
+  author: { type: String, default: "Unknown" },
+  description: { type: String, default: "None" },
+  notes: { type: String, default: "None" },
+  quotes: { type: String, default: "None" },
+});
 const UserSchema = new Schema({
   fname: { type: String, required: [true, "Please input a first name"] },
   lname: { type: String, required: [true, "Please input a last name"] },
@@ -23,6 +31,7 @@ const UserSchema = new Schema({
     required: [true, "Please input a password"],
     minlength: [6, "Password must be at least 6 characters"],
   },
+  book: [BookSchema],
 });
 
 // Hashing the password before getting it saved to database
@@ -49,4 +58,5 @@ UserSchema.statics.login = async function (username, password) {
 };
 
 const user = mongoose.model("user", UserSchema);
-module.exports = user;
+const book = mongoose.model("book", BookSchema);
+module.exports = { user, book };

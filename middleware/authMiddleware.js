@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/userModel");
+const User = require("../models/userModel").user;
 
 module.exports = {
   requireAuth: (req, res, next) => {
@@ -34,10 +34,14 @@ module.exports = {
         }
         console.log("Current User middleware");
         console.log(decodedToken);
-        const user = await User.findById(decodedToken._id);
-        res.locals.user = user;
-        console.log("Current user is ", user.username);
-        next();
+        try {
+          const user = await User.findById(decodedToken._id);
+          res.locals.user = user;
+          console.log("Current user is ", user.username);
+          next();
+        } catch (e) {
+          console.log("Couldn't authenticate\n", e);
+        }
       });
     } else {
       res.locals.user = null;

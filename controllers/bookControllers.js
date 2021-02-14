@@ -1,6 +1,26 @@
 const mongoose = require("mongoose");
-const Book = require("../models/bookModel");
+const User = require("../models/userModel").user;
+const Book = require("../models/userModel").book;
 const axios = require("axios").default;
+const jwt = require("jsonwebtoken");
+
+//Getting the user by token
+const getUser = async (req) => {
+  const token = req.cookies.jwt;
+  userID = jwt.decode(token)._id;
+  user = await User.findById(userID);
+  return user;
+};
+// const dynamicSort = (property, sortOrder) => {
+//   return function (a, b) {
+//     if (sortOrder == -1) {
+//       return b[property].localeCompare(a[property]);
+//     } else {
+//       return a[property].localeCompare(b[property]);
+//     }
+//   };
+// };
+
 module.exports = {
   // Showing all user books
   allBooks: async (req, res) => {
@@ -15,7 +35,9 @@ module.exports = {
       const bookIndex = (pageNumber - 1) * booksPerPage;
       const orderQuery = {};
       orderQuery[sortBy] = sortOrder;
-      books = await Book.find().sort(orderQuery);
+      const user = await getUser(req);
+      // books = user.book.sort(dynamicSort(sortBy, sortOrder));
+      books = user.book;
       // Pagination
       const maxResult = books.length;
       const maxPage = Math.ceil(maxResult / 10);
@@ -36,7 +58,9 @@ module.exports = {
   // Delete all user books
   allBooksDeleted: async (req, res) => {
     try {
-      await Book.deleteMany();
+      const user = await getUser(req);
+      // user.book.length = 0;
+      // await user.save();
       console.log("All user books deleted");
       res.send();
     } catch (e) {
@@ -55,6 +79,8 @@ module.exports = {
   addBook: async (req, res) => {
     try {
       if (isNaN(req.body.year)) req.body.year = 0;
+      const user = await getUser(req);
+      books = user.book;
       const book = new Book({
         title: req.body.title,
         year: req.body.year,
@@ -63,23 +89,30 @@ module.exports = {
         notes: req.body.notes,
         quotes: req.body.quotes,
       });
-      // Checking if the same book and the same author were used before.
-      const oldBook = await Book.findOne({
-        $and: [{ title: req.body.title }, { author: req.body.author }],
+      books.push(book);
+      console.log("Book added", book.title);
+      await user.save();
+      res.render("bookViews/add", {
+        title: "Add",
+        added: 1,
       });
-      // If it's a unique record, save it to the database
-      if (oldBook === null || oldBook._id.toString() === req.params.id) {
-        await book.save();
-        console.log("New book added: ", book.title);
-        res.render("bookViews/add", {
-          title: "Add",
-          added: 1,
-        });
-      } else {
-        // Else, prompt to the user that the book already exists
-        console.log("This book already exists: ", book.title);
-        res.json({ id: oldBook._id });
-      }
+      // // Checking if the same book and the same author were used before.
+      // const oldBook = await Book.findOne({
+      //   $and: [{ title: req.body.title }, { author: req.body.author }],
+      // });
+      // // If it's a unique record, save it to the database
+      // if (oldBook === null || oldBook._id.toString() === req.params.id) {
+      //   await book.save();
+      //   console.log("New book added: ", book.title);
+      //   res.render("bookViews/add", {
+      //     title: "Add",
+      //     added: 1,
+      //   });
+      // } else {
+      //   // Else, prompt to the user that the book already exists
+      //   console.log("This book already exists: ", book.title);
+      //   res.json({ id: oldBook._id });
+      // }
     } catch (e) {
       console.log("Book couldn't be added\n", e);
     }
