@@ -3,6 +3,7 @@
 // TODO: Styling the #noBooks section
 // TODO: refreshing after updating a book takes a long time
 // TODO: confirmation message after successful update
+// TODO: understand custom sorting
 // TODO: Opening in mozilla dev
 // TODO: Sanitizing user input
 

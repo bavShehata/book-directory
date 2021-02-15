@@ -11,15 +11,21 @@ const getUser = async (req) => {
   user = await User.findById(userID);
   return user;
 };
-// const dynamicSort = (property, sortOrder) => {
-//   return function (a, b) {
-//     if (sortOrder == -1) {
-//       return b[property].localeCompare(a[property]);
-//     } else {
-//       return a[property].localeCompare(b[property]);
-//     }
-//   };
-// };
+
+//Custom sorting function
+const dynamicSort = (property, sortOrder) => {
+  return function (a, b) {
+    // descending
+    if (sortOrder == -1) {
+      if (b[property] > a[property]) return 1;
+      else return -1;
+    } //ascending
+    else {
+      if (b[property] > a[property]) return -1;
+      else return 1;
+    }
+  };
+};
 
 module.exports = {
   // Showing all user books
@@ -36,8 +42,7 @@ module.exports = {
       const orderQuery = {};
       orderQuery[sortBy] = sortOrder;
       const user = await getUser(req);
-      // books = user.book.sort(dynamicSort(sortBy, sortOrder));
-      books = user.book;
+      books = user.book.sort(dynamicSort(sortBy, sortOrder));
       // Pagination
       const maxResult = books.length;
       const maxPage = Math.ceil(maxResult / 10);
