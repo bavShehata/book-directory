@@ -59,8 +59,11 @@ module.exports = {
   allBooksDeleted: async (req, res) => {
     try {
       const user = await getUser(req);
-      // user.book.length = 0;
-      // await user.save();
+      // Delete all sub-documents starting from the last
+      for (var i = user.book.length - 1; i >= 0; i--) {
+        user.book[i].remove();
+      }
+      await user.save();
       console.log("All user books deleted");
       res.send();
     } catch (e) {
@@ -96,23 +99,6 @@ module.exports = {
         title: "Add",
         added: 1,
       });
-      // // Checking if the same book and the same author were used before.
-      // const oldBook = await Book.findOne({
-      //   $and: [{ title: req.body.title }, { author: req.body.author }],
-      // });
-      // // If it's a unique record, save it to the database
-      // if (oldBook === null || oldBook._id.toString() === req.params.id) {
-      //   await book.save();
-      //   console.log("New book added: ", book.title);
-      //   res.render("bookViews/add", {
-      //     title: "Add",
-      //     added: 1,
-      //   });
-      // } else {
-      //   // Else, prompt to the user that the book already exists
-      //   console.log("This book already exists: ", book.title);
-      //   res.json({ id: oldBook._id });
-      // }
     } catch (e) {
       console.log("Book couldn't be added\n", e);
     }
@@ -120,8 +106,10 @@ module.exports = {
   // deleting a book from the user
   deleteBook: async (req, res) => {
     try {
-      const deletedBook = await Book.findByIdAndDelete(req.params.id);
+      const user = await getUser(req);
+      const deletedBook = user.book.id(req.params.id).remove();
       console.log("Book deleted: ", deletedBook.title);
+      await user.save();
       res.send();
     } catch (e) {
       console.log("Book couldn't be deleted\n", e);
@@ -130,16 +118,27 @@ module.exports = {
   // upading a book for the user
   updateBook: async (req, res) => {
     try {
-      const newBook = await Book.findOne({ _id: req.params.id });
+      const user = await getUser(req);
+      const newBook = user.book.id(req.params.id);
+      console.log("New book: ", newBook);
       // Checking if the same book and the same author were used before.
-      const oldBook = await Book.findOne({
-        $and: [{ title: req.body.data[0] }, { author: req.body.data[2] }],
-      });
-      // If it's a unique record, save it to the database
-      if (oldBook === null || oldBook._id.toString() === req.params.id) {
+      var repeatedBook = false;
+      for (var i = 0; i < user.book.length; i++) {
+        if (
+          user.book[i].title == req.body.data[0] &&
+          user.book[i].author == req.body.data[2]
+        ) {
+          if (user.book[i].id != newBook.id) {
+            repeatedBook = true;
+            break;
+          }
+        }
+      }
+
+      if (!repeatedBook) {
         // Check if the year is a number
         if (isNaN(req.body.data[1])) {
-          console.log("The year must be a number: ", oldBook.title);
+          console.log("The year must be a number: ", newBook.title);
           res.status(400).send();
         }
         // Check if the book has no title, year, or author
@@ -158,7 +157,7 @@ module.exports = {
           newBook.description = req.body.data[3];
           newBook.notes = req.body.data[4];
           newBook.quotes = req.body.data[5];
-          await newBook.save();
+          await user.save();
           console.log("Book updated Successfully: ", newBook.title);
         }
       } else {
@@ -167,14 +166,14 @@ module.exports = {
         res.status(409).send();
       }
     } catch (e) {
-      console.log("Book could not be updated");
+      console.log("Book could not be updated\n", e);
     }
   },
   // Get a specific book
   getBook: async (req, res) => {
     try {
-      const books = await Book.find().sort({ _id: -1 });
-      const book = await Book.findOne({ _id: req.params.id });
+      const user = await getUser(req);
+      const book = user.book.id(req.params.id);
       console.log("Book retrieved successfully: ", book.title);
       res.render("bookViews/book", { title: "Book Directory", book });
     } catch (e) {

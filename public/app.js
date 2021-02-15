@@ -1,7 +1,9 @@
 // TODO: Customized delete confirmation
 // TODO: Customized alerts
 // TODO: Styling the #noBooks section
-
+// TODO: refreshing after updating a book takes a long time
+// TODO: confirmation message after successful update
+// TODO: Opening in mozilla dev
 // TODO: Sanitizing user input
 
 // User
@@ -59,7 +61,7 @@ if (sortBtn != undefined) {
       // Replace the first list with the new one
       const bookSection = document.querySelector("#allBooks");
       // Simulate a mouse click:
-      window.location.href = `/book/?sortBy=${sortBy}&order=${sortOrder}`;
+      window.location.href = `/book/?sortBy=${sortBy}&order=${sortOrder}&p=1`;
     } catch (e) {
       console.log("Couldn't order books\n", e);
     }
