@@ -4,6 +4,8 @@
 // TODO: refreshing after updating a book takes a long time
 // TODO: confirmation message after successful update
 // TODO: understand custom sorting
+// TODO: better author sub-document
+// TODO: a function to check repitive books
 // TODO: Opening in mozilla dev
 // TODO: Sanitizing user input
 

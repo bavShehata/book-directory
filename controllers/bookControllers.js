@@ -97,13 +97,32 @@ module.exports = {
         notes: req.body.notes,
         quotes: req.body.quotes,
       });
-      books.push(book);
-      console.log("Book added", book.title);
-      await user.save();
-      res.render("bookViews/add", {
-        title: "Add",
-        added: 1,
-      });
+      // Checking if the same book and the same author were used before.
+      var repeatedBook = false;
+      var oldBook;
+      for (var i = 0; i < user.book.length; i++) {
+        if (
+          user.book[i].title == req.body.title &&
+          user.book[i].author == req.body.author
+        ) {
+          repeatedBook = true;
+          oldBook = user.book[i];
+          break;
+        }
+      }
+      if (!repeatedBook) {
+        books.push(book);
+        console.log("Book added", book.title);
+        await user.save();
+        res.render("bookViews/add", {
+          title: "Add",
+          added: 1,
+        });
+      } else {
+        // Else, prompt to the user that the book already exists
+        console.log("This book already exists: ", book.title);
+        res.json({ id: oldBook._id });
+      }
     } catch (e) {
       console.log("Book couldn't be added\n", e);
     }
@@ -139,7 +158,6 @@ module.exports = {
           }
         }
       }
-
       if (!repeatedBook) {
         // Check if the year is a number
         if (isNaN(req.body.data[1])) {
@@ -242,12 +260,16 @@ module.exports = {
         var bookDescription = bookInfo.description;
         if (bookDescription === undefined) bookDescription = "None";
         // Check if the book is already in the user database
-        var added;
-        const oldBook = await Book.findOne({
-          $and: [{ title: bookTitle }, { author: bookAuthors }],
-        });
-        if (oldBook == null) added = false;
-        else added = true;
+        var added = false;
+        const user = await getUser(req);
+        // Checking if the same book and the same author were used before.
+        for (var j = 0; j < user.book.length; j++) {
+          if (
+            user.book[j].title == bookTitle &&
+            user.book[j].author == bookAuthors
+          )
+            added = true;
+        }
         bookInfo = Object.assign(bookInfo, { added });
       }
       console.log("Books shown to browse");
