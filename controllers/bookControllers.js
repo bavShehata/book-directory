@@ -147,6 +147,7 @@ module.exports = {
       console.log("New book: ", newBook);
       // Checking if the same book and the same author were used before.
       var repeatedBook = false;
+      var oldBook;
       for (var i = 0; i < user.book.length; i++) {
         if (
           user.book[i].title == req.body.data[0] &&
@@ -154,6 +155,7 @@ module.exports = {
         ) {
           if (user.book[i].id != newBook.id) {
             repeatedBook = true;
+            oldBook = user.book[i];
             break;
           }
         }
@@ -185,7 +187,7 @@ module.exports = {
         }
       } else {
         // Else, prompt to the user that the book already exists
-        console.log("This book already exists: ", oldBook.title);
+        console.log("This book already exists: ", newBook.title);
         res.status(409).send();
       }
     } catch (e) {

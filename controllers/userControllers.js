@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const User = require("../models/userModel");
+const User = require("../models/userModel").user;
 const axios = require("axios").default;
 const jwt = require("jsonwebtoken");
 require("dotenv/config");
@@ -102,7 +102,7 @@ function handleSignupErrors(e) {
   var error = { email: "", password: "" };
   var outputError = {
     err: "passwordHolder",
-    errMsg: "Unknown error, please try again later",
+    errMsg: `Unknown error, please try again later\n ${e}`,
   };
   if (e.message.includes("user validation failed")) {
     Object.values(e.errors).forEach((error) => {

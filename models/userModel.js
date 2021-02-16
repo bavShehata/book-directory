@@ -32,14 +32,21 @@ const UserSchema = new Schema({
     minlength: [6, "Password must be at least 6 characters"],
   },
   book: [BookSchema],
+  firstTime: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 // Hashing the password before getting it saved to database
 UserSchema.pre("save", async function (next) {
-  this.password = await argon2.hash(this.password, {
-    type: argon2.argon2id,
-  });
-  console.log(this);
+  // prevents rehashing everytime a book gets added
+  if (this.firstTime) {
+    this.firstTime = false;
+    this.password = await argon2.hash(this.password, {
+      type: argon2.argon2id,
+    });
+  }
   next();
 });
 

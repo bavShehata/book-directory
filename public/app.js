@@ -8,6 +8,14 @@
 // TODO: a function to check repitive books
 // TODO: Opening in mozilla dev
 // TODO: Sanitizing user input
+// TODO: speed performance of browse page
+// TODO: forgot password/username
+// TODO: account creation alert
+// TODO: email confirmation
+// TODO: confirm email and password
+// TODO: hiding navigation bar when scrolling down, and showing a button to scroll up
+// TODO: a flag to show whether it is a manual book or google's???
+// TODO: Make sure you understand merging quite well, then merge the two branches
 
 // User
 const loginForm = document.querySelector("#login form");

@@ -4,7 +4,6 @@ const User = require("../models/userModel").user;
 module.exports = {
   requireAuth: (req, res, next) => {
     const token = req.cookies.jwt;
-
     // Check if token exists
     if (token) {
       jwt.verify(token, process.env.jwtSecret, (err, decodedToken) => {
